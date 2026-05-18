@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expand sidebar" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - button "User menu" [ref=e10] [cursor=pointer]:
+      - img "Avatar of Admin PublikDigital" [ref=e11]
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - link "PublikDigital" [ref=e17] [cursor=pointer]:
+        - /url: http://localhost:8000/admin
+        - generic [ref=e18]: PublikDigital
+      - navigation [ref=e19]:
+        - list [ref=e20]:
+          - listitem [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "Dashboard" [ref=e24] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin
+                  - img [ref=e25]
+                  - generic [ref=e27]: Dashboard
+              - listitem [ref=e28]:
+                - link "Produk" [ref=e29] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/products
+                  - img [ref=e30]
+                  - generic [ref=e32]: Produk
+              - listitem [ref=e33]:
+                - link "Pesanan 10" [ref=e34] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/orders
+                  - img [ref=e35]
+                  - generic [ref=e37]: Pesanan
+                  - generic [ref=e41]: "10"
+              - listitem [ref=e42]:
+                - link "Kategori" [ref=e43] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/categories
+                  - img [ref=e44]
+                  - generic [ref=e47]: Kategori
+              - listitem [ref=e48]:
+                - link "Pengguna" [ref=e49] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/users
+                  - img [ref=e50]
+                  - generic [ref=e52]: Pengguna
+              - listitem [ref=e53]:
+                - link "Percakapan" [ref=e54] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/conversations
+                  - img [ref=e55]
+                  - generic [ref=e57]: Percakapan
+    - main [ref=e59]:
+      - generic [ref=e61]:
+        - heading "Dashboard" [level=1] [ref=e64]
+        - generic [ref=e75]:
+          - img "Avatar of Admin PublikDigital" [ref=e76]
+          - generic [ref=e77]:
+            - heading "Welcome" [level=2] [ref=e78]
+            - paragraph [ref=e79]: Admin PublikDigital
+          - button "Sign out" [ref=e81] [cursor=pointer]:
+            - img [ref=e82]
+            - text: Sign out
+  - generic:
+    - status

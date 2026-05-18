@@ -1,0 +1,506 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Expand sidebar" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - button "User menu" [ref=e10] [cursor=pointer]:
+      - img "Avatar of Admin PublikDigital" [ref=e11]
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - link "PublikDigital" [ref=e17] [cursor=pointer]:
+        - /url: http://localhost:8000/admin
+        - generic [ref=e18]: PublikDigital
+      - navigation [ref=e19]:
+        - list [ref=e20]:
+          - listitem [ref=e21]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link "Dashboard" [ref=e24] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin
+                  - img [ref=e25]
+                  - generic [ref=e27]: Dashboard
+              - listitem [ref=e28]:
+                - link "Produk" [ref=e29] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/products
+                  - img [ref=e30]
+                  - generic [ref=e32]: Produk
+              - listitem [ref=e33]:
+                - link "Pesanan 10" [ref=e34] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/orders
+                  - img [ref=e35]
+                  - generic [ref=e37]: Pesanan
+                  - generic [ref=e41]: "10"
+              - listitem [ref=e42]:
+                - link "Kategori" [ref=e43] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/categories
+                  - img [ref=e44]
+                  - generic [ref=e47]: Kategori
+              - listitem [ref=e48]:
+                - link "Pengguna" [ref=e49] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/users
+                  - img [ref=e50]
+                  - generic [ref=e52]: Pengguna
+              - listitem [ref=e53]:
+                - link "Percakapan" [ref=e54] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/conversations
+                  - img [ref=e55]
+                  - generic [ref=e57]: Percakapan
+    - main [ref=e59]:
+      - generic [ref=e61]:
+        - generic [ref=e63]:
+          - navigation [ref=e64]:
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link "Daftar Pesanan" [ref=e67] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/orders
+              - listitem [ref=e68]:
+                - img [ref=e69]
+                - generic [ref=e71]: List
+          - heading "Daftar Pesanan" [level=1] [ref=e72]
+        - generic [ref=e80]:
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - generic [ref=e85]: Search
+              - generic [ref=e86]:
+                - img [ref=e88]
+                - searchbox "Search" [ref=e91]
+            - button "Filter" [ref=e94] [cursor=pointer]:
+              - img [ref=e95]
+              - generic [ref=e98]: "0"
+          - table [ref=e100]:
+            - rowgroup [ref=e101]:
+              - row "Select/deselect all items for bulk actions. No. Pesanan Pembeli Kode Unik Total Status Pembayaran Tanggal Actions" [ref=e102]:
+                - columnheader "Select/deselect all items for bulk actions." [ref=e103]:
+                  - checkbox "Select/deselect all items for bulk actions." [ref=e104]
+                - columnheader "No. Pesanan" [ref=e105]
+                - columnheader "Pembeli" [ref=e106]:
+                  - button "Pembeli" [ref=e107] [cursor=pointer]:
+                    - text: Pembeli
+                    - img [ref=e108]
+                - columnheader "Kode Unik" [ref=e110]:
+                  - button "Kode Unik" [ref=e111] [cursor=pointer]:
+                    - text: Kode Unik
+                    - img [ref=e112]
+                - columnheader "Total" [ref=e114]:
+                  - button "Total" [ref=e115] [cursor=pointer]:
+                    - text: Total
+                    - img [ref=e116]
+                - columnheader "Status" [ref=e118]
+                - columnheader "Pembayaran" [ref=e119]
+                - columnheader "Tanggal" [ref=e120]:
+                  - button "Tanggal" [ref=e121] [cursor=pointer]:
+                    - text: Tanggal
+                    - img [ref=e122]
+                - columnheader "Actions" [ref=e124]
+            - rowgroup [ref=e125]:
+              - row "Select/deselect item 43 for bulk actions. PD-20260518-1C5C8D Test User 440 IDR 199,000.00 completed paid 18 May 2026, 10:52 View Edit" [ref=e126]:
+                - cell "Select/deselect item 43 for bulk actions." [ref=e127]:
+                  - checkbox "Select/deselect item 43 for bulk actions." [ref=e128]
+                - cell "PD-20260518-1C5C8D" [ref=e129]:
+                  - link "PD-20260518-1C5C8D" [ref=e130] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e131]: PD-20260518-1C5C8D
+                - cell "Test User" [ref=e132]:
+                  - link "Test User" [ref=e133] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e134]: Test User
+                - cell "440" [ref=e135]:
+                  - link "440" [ref=e136] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e137]: "440"
+                - cell "IDR 199,000.00" [ref=e138]:
+                  - link "IDR 199,000.00" [ref=e139] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e140]: IDR 199,000.00
+                - cell "completed" [ref=e141]:
+                  - link "completed" [ref=e142] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e144]: completed
+                - cell "paid" [ref=e145]:
+                  - link "paid" [ref=e146] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e148]: paid
+                - cell "18 May 2026, 10:52" [ref=e149]:
+                  - link "18 May 2026, 10:52" [ref=e150] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/43
+                    - generic [ref=e151]: 18 May 2026, 10:52
+                - cell "View Edit" [ref=e152]:
+                  - generic [ref=e153]:
+                    - link "View" [ref=e154] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/43
+                      - img [ref=e155]
+                      - text: View
+                    - link "Edit" [ref=e158] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/43/edit
+                      - img [ref=e159]
+                      - text: Edit
+              - row "Select/deselect item 42 for bulk actions. PD-20260518-D7E362 Pembeli RepublikDigital IDR 442,890.00 pending unpaid 18 May 2026, 07:19 View Edit" [ref=e162]:
+                - cell "Select/deselect item 42 for bulk actions." [ref=e163]:
+                  - checkbox "Select/deselect item 42 for bulk actions." [ref=e164]
+                - cell "PD-20260518-D7E362" [ref=e165]:
+                  - link "PD-20260518-D7E362" [ref=e166] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e167]: PD-20260518-D7E362
+                - cell "Pembeli RepublikDigital" [ref=e168]:
+                  - link "Pembeli RepublikDigital" [ref=e169] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e170]: Pembeli RepublikDigital
+                - cell [ref=e171]:
+                  - link [ref=e172] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                - cell "IDR 442,890.00" [ref=e174]:
+                  - link "IDR 442,890.00" [ref=e175] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e176]: IDR 442,890.00
+                - cell "pending" [ref=e177]:
+                  - link "pending" [ref=e178] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e180]: pending
+                - cell "unpaid" [ref=e181]:
+                  - link "unpaid" [ref=e182] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e184]: unpaid
+                - cell "18 May 2026, 07:19" [ref=e185]:
+                  - link "18 May 2026, 07:19" [ref=e186] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/42
+                    - generic [ref=e187]: 18 May 2026, 07:19
+                - cell "View Edit" [ref=e188]:
+                  - generic [ref=e189]:
+                    - link "View" [ref=e190] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/42
+                      - img [ref=e191]
+                      - text: View
+                    - link "Edit" [ref=e194] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/42/edit
+                      - img [ref=e195]
+                      - text: Edit
+              - row "Select/deselect item 41 for bulk actions. PD-20260518-D7B8AD Pembeli RepublikDigital IDR 531,690.00 completed paid 18 May 2026, 07:19 View Edit" [ref=e198]:
+                - cell "Select/deselect item 41 for bulk actions." [ref=e199]:
+                  - checkbox "Select/deselect item 41 for bulk actions." [ref=e200]
+                - cell "PD-20260518-D7B8AD" [ref=e201]:
+                  - link "PD-20260518-D7B8AD" [ref=e202] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e203]: PD-20260518-D7B8AD
+                - cell "Pembeli RepublikDigital" [ref=e204]:
+                  - link "Pembeli RepublikDigital" [ref=e205] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e206]: Pembeli RepublikDigital
+                - cell [ref=e207]:
+                  - link [ref=e208] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                - cell "IDR 531,690.00" [ref=e210]:
+                  - link "IDR 531,690.00" [ref=e211] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e212]: IDR 531,690.00
+                - cell "completed" [ref=e213]:
+                  - link "completed" [ref=e214] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e216]: completed
+                - cell "paid" [ref=e217]:
+                  - link "paid" [ref=e218] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e220]: paid
+                - cell "18 May 2026, 07:19" [ref=e221]:
+                  - link "18 May 2026, 07:19" [ref=e222] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/41
+                    - generic [ref=e223]: 18 May 2026, 07:19
+                - cell "View Edit" [ref=e224]:
+                  - generic [ref=e225]:
+                    - link "View" [ref=e226] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/41
+                      - img [ref=e227]
+                      - text: View
+                    - link "Edit" [ref=e230] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/41/edit
+                      - img [ref=e231]
+                      - text: Edit
+              - row "Select/deselect item 8 for bulk actions. PD-20260518-29644F Hendra Wijaya IDR 1,274,280.00 processing paid 18 May 2026, 01:07 View Edit" [ref=e234]:
+                - cell "Select/deselect item 8 for bulk actions." [ref=e235]:
+                  - checkbox "Select/deselect item 8 for bulk actions." [ref=e236]
+                - cell "PD-20260518-29644F" [ref=e237]:
+                  - link "PD-20260518-29644F" [ref=e238] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e239]: PD-20260518-29644F
+                - cell "Hendra Wijaya" [ref=e240]:
+                  - link "Hendra Wijaya" [ref=e241] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e242]: Hendra Wijaya
+                - cell [ref=e243]:
+                  - link [ref=e244] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                - cell "IDR 1,274,280.00" [ref=e246]:
+                  - link "IDR 1,274,280.00" [ref=e247] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e248]: IDR 1,274,280.00
+                - cell "processing" [ref=e249]:
+                  - link "processing" [ref=e250] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e252]: processing
+                - cell "paid" [ref=e253]:
+                  - link "paid" [ref=e254] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e256]: paid
+                - cell "18 May 2026, 01:07" [ref=e257]:
+                  - link "18 May 2026, 01:07" [ref=e258] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/8
+                    - generic [ref=e259]: 18 May 2026, 01:07
+                - cell "View Edit" [ref=e260]:
+                  - generic [ref=e261]:
+                    - link "View" [ref=e262] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/8
+                      - img [ref=e263]
+                      - text: View
+                    - link "Edit" [ref=e266] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/8/edit
+                      - img [ref=e267]
+                      - text: Edit
+              - row "Select/deselect item 19 for bulk actions. PD-20260518-2A7D49 Sari Indah IDR 609,390.00 processing paid 15 May 2026, 11:00 View Edit" [ref=e270]:
+                - cell "Select/deselect item 19 for bulk actions." [ref=e271]:
+                  - checkbox "Select/deselect item 19 for bulk actions." [ref=e272]
+                - cell "PD-20260518-2A7D49" [ref=e273]:
+                  - link "PD-20260518-2A7D49" [ref=e274] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e275]: PD-20260518-2A7D49
+                - cell "Sari Indah" [ref=e276]:
+                  - link "Sari Indah" [ref=e277] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e278]: Sari Indah
+                - cell [ref=e279]:
+                  - link [ref=e280] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                - cell "IDR 609,390.00" [ref=e282]:
+                  - link "IDR 609,390.00" [ref=e283] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e284]: IDR 609,390.00
+                - cell "processing" [ref=e285]:
+                  - link "processing" [ref=e286] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e288]: processing
+                - cell "paid" [ref=e289]:
+                  - link "paid" [ref=e290] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e292]: paid
+                - cell "15 May 2026, 11:00" [ref=e293]:
+                  - link "15 May 2026, 11:00" [ref=e294] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/19
+                    - generic [ref=e295]: 15 May 2026, 11:00
+                - cell "View Edit" [ref=e296]:
+                  - generic [ref=e297]:
+                    - link "View" [ref=e298] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/19
+                      - img [ref=e299]
+                      - text: View
+                    - link "Edit" [ref=e302] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/19/edit
+                      - img [ref=e303]
+                      - text: Edit
+              - row "Select/deselect item 31 for bulk actions. PD-20260518-4C3C17 Fajar Nugroho IDR 220,890.00 pending unpaid 15 May 2026, 08:05 View Edit" [ref=e306]:
+                - cell "Select/deselect item 31 for bulk actions." [ref=e307]:
+                  - checkbox "Select/deselect item 31 for bulk actions." [ref=e308]
+                - cell "PD-20260518-4C3C17" [ref=e309]:
+                  - link "PD-20260518-4C3C17" [ref=e310] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e311]: PD-20260518-4C3C17
+                - cell "Fajar Nugroho" [ref=e312]:
+                  - link "Fajar Nugroho" [ref=e313] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e314]: Fajar Nugroho
+                - cell [ref=e315]:
+                  - link [ref=e316] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                - cell "IDR 220,890.00" [ref=e318]:
+                  - link "IDR 220,890.00" [ref=e319] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e320]: IDR 220,890.00
+                - cell "pending" [ref=e321]:
+                  - link "pending" [ref=e322] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e324]: pending
+                - cell "unpaid" [ref=e325]:
+                  - link "unpaid" [ref=e326] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e328]: unpaid
+                - cell "15 May 2026, 08:05" [ref=e329]:
+                  - link "15 May 2026, 08:05" [ref=e330] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/31
+                    - generic [ref=e331]: 15 May 2026, 08:05
+                - cell "View Edit" [ref=e332]:
+                  - generic [ref=e333]:
+                    - link "View" [ref=e334] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/31
+                      - img [ref=e335]
+                      - text: View
+                    - link "Edit" [ref=e338] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/31/edit
+                      - img [ref=e339]
+                      - text: Edit
+              - row "Select/deselect item 40 for bulk actions. PD-20260518-4D195E Fajar Nugroho IDR 496,170.00 processing paid 14 May 2026, 06:02 View Edit" [ref=e342]:
+                - cell "Select/deselect item 40 for bulk actions." [ref=e343]:
+                  - checkbox "Select/deselect item 40 for bulk actions." [ref=e344]
+                - cell "PD-20260518-4D195E" [ref=e345]:
+                  - link "PD-20260518-4D195E" [ref=e346] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e347]: PD-20260518-4D195E
+                - cell "Fajar Nugroho" [ref=e348]:
+                  - link "Fajar Nugroho" [ref=e349] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e350]: Fajar Nugroho
+                - cell [ref=e351]:
+                  - link [ref=e352] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                - cell "IDR 496,170.00" [ref=e354]:
+                  - link "IDR 496,170.00" [ref=e355] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e356]: IDR 496,170.00
+                - cell "processing" [ref=e357]:
+                  - link "processing" [ref=e358] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e360]: processing
+                - cell "paid" [ref=e361]:
+                  - link "paid" [ref=e362] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e364]: paid
+                - cell "14 May 2026, 06:02" [ref=e365]:
+                  - link "14 May 2026, 06:02" [ref=e366] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/40
+                    - generic [ref=e367]: 14 May 2026, 06:02
+                - cell "View Edit" [ref=e368]:
+                  - generic [ref=e369]:
+                    - link "View" [ref=e370] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/40
+                      - img [ref=e371]
+                      - text: View
+                    - link "Edit" [ref=e374] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/40/edit
+                      - img [ref=e375]
+                      - text: Edit
+              - row "Select/deselect item 15 for bulk actions. PD-20260518-2A037C Sari Indah IDR 1,496,280.00 processing paid 12 May 2026, 10:30 View Edit" [ref=e378]:
+                - cell "Select/deselect item 15 for bulk actions." [ref=e379]:
+                  - checkbox "Select/deselect item 15 for bulk actions." [ref=e380]
+                - cell "PD-20260518-2A037C" [ref=e381]:
+                  - link "PD-20260518-2A037C" [ref=e382] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e383]: PD-20260518-2A037C
+                - cell "Sari Indah" [ref=e384]:
+                  - link "Sari Indah" [ref=e385] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e386]: Sari Indah
+                - cell [ref=e387]:
+                  - link [ref=e388] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                - cell "IDR 1,496,280.00" [ref=e390]:
+                  - link "IDR 1,496,280.00" [ref=e391] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e392]: IDR 1,496,280.00
+                - cell "processing" [ref=e393]:
+                  - link "processing" [ref=e394] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e396]: processing
+                - cell "paid" [ref=e397]:
+                  - link "paid" [ref=e398] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e400]: paid
+                - cell "12 May 2026, 10:30" [ref=e401]:
+                  - link "12 May 2026, 10:30" [ref=e402] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/15
+                    - generic [ref=e403]: 12 May 2026, 10:30
+                - cell "View Edit" [ref=e404]:
+                  - generic [ref=e405]:
+                    - link "View" [ref=e406] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/15
+                      - img [ref=e407]
+                      - text: View
+                    - link "Edit" [ref=e410] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/15/edit
+                      - img [ref=e411]
+                      - text: Edit
+              - row "Select/deselect item 32 for bulk actions. PD-20260518-4C4CA8 Rina Wulandari IDR 1,219,890.00 completed paid 11 May 2026, 19:24 View Edit" [ref=e414]:
+                - cell "Select/deselect item 32 for bulk actions." [ref=e415]:
+                  - checkbox "Select/deselect item 32 for bulk actions." [ref=e416]
+                - cell "PD-20260518-4C4CA8" [ref=e417]:
+                  - link "PD-20260518-4C4CA8" [ref=e418] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e419]: PD-20260518-4C4CA8
+                - cell "Rina Wulandari" [ref=e420]:
+                  - link "Rina Wulandari" [ref=e421] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e422]: Rina Wulandari
+                - cell [ref=e423]:
+                  - link [ref=e424] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                - cell "IDR 1,219,890.00" [ref=e426]:
+                  - link "IDR 1,219,890.00" [ref=e427] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e428]: IDR 1,219,890.00
+                - cell "completed" [ref=e429]:
+                  - link "completed" [ref=e430] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e432]: completed
+                - cell "paid" [ref=e433]:
+                  - link "paid" [ref=e434] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e436]: paid
+                - cell "11 May 2026, 19:24" [ref=e437]:
+                  - link "11 May 2026, 19:24" [ref=e438] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/32
+                    - generic [ref=e439]: 11 May 2026, 19:24
+                - cell "View Edit" [ref=e440]:
+                  - generic [ref=e441]:
+                    - link "View" [ref=e442] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/32
+                      - img [ref=e443]
+                      - text: View
+                    - link "Edit" [ref=e446] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/32/edit
+                      - img [ref=e447]
+                      - text: Edit
+              - row "Select/deselect item 14 for bulk actions. PD-20260518-29F206 Fajar Nugroho IDR 220,890.00 completed paid 11 May 2026, 07:59 View Edit" [ref=e450]:
+                - cell "Select/deselect item 14 for bulk actions." [ref=e451]:
+                  - checkbox "Select/deselect item 14 for bulk actions." [ref=e452]
+                - cell "PD-20260518-29F206" [ref=e453]:
+                  - link "PD-20260518-29F206" [ref=e454] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e455]: PD-20260518-29F206
+                - cell "Fajar Nugroho" [ref=e456]:
+                  - link "Fajar Nugroho" [ref=e457] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e458]: Fajar Nugroho
+                - cell [ref=e459]:
+                  - link [ref=e460] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                - cell "IDR 220,890.00" [ref=e462]:
+                  - link "IDR 220,890.00" [ref=e463] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e464]: IDR 220,890.00
+                - cell "completed" [ref=e465]:
+                  - link "completed" [ref=e466] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e468]: completed
+                - cell "paid" [ref=e469]:
+                  - link "paid" [ref=e470] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e472]: paid
+                - cell "11 May 2026, 07:59" [ref=e473]:
+                  - link "11 May 2026, 07:59" [ref=e474] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/orders/14
+                    - generic [ref=e475]: 11 May 2026, 07:59
+                - cell "View Edit" [ref=e476]:
+                  - generic [ref=e477]:
+                    - link "View" [ref=e478] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/14
+                      - img [ref=e479]
+                      - text: View
+                    - link "Edit" [ref=e482] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/orders/14/edit
+                      - img [ref=e483]
+                      - text: Edit
+          - navigation "Pagination navigation" [ref=e486]:
+            - generic [ref=e489]:
+              - generic [ref=e491]: Per page
+              - combobox "Per page" [ref=e493]:
+                - option "5"
+                - option "10" [selected]
+                - option "25"
+                - option "50"
+            - button "Next" [ref=e494] [cursor=pointer]
+  - generic:
+    - status
