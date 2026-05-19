@@ -33,7 +33,7 @@ class LoginController extends Controller
                 return redirect()->intended('/admin');
             }
 
-            return redirect()->intended(route('buyer.dashboard'));
+            return redirect()->route('buyer.dashboard');
         }
 
         return back()->withErrors([

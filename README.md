@@ -239,6 +239,15 @@ php artisan serve
 
 ---
 
+## Changelog
+
+### 2026-05-19
+
+- **Fix: Redirect login pembeli** — Pembeli yang sebelumnya mengakses `/admin` saat logout tidak lagi diarahkan ke halaman admin setelah login. Perbaikan di `app/Http/Controllers/Auth/LoginController.php:36`: ganti `redirect()->intended()` dengan `redirect()->route()`.
+- **Fix: Navbar mobile items bocor ke desktop** — Elemen menu khusus mobile (`nav-mobile-only`) dan tombol toggle tidak lagi tampil di viewport desktop. Perbaikan selector CSS dengan `!important` di `resources/css/design-system.css`.
+
+---
+
 ## Lisensi
 
 [MIT License](LICENSE) — Hak Cipta &copy; 2026 PublikDigital.
