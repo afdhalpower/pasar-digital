@@ -14,7 +14,9 @@ class Order extends Model
         'subtotal',
         'tax',
         'total',
+        'discount',
         'unique_code',
+        'coupon_id',
         'status',
         'payment_method',
         'payment_status',
@@ -25,6 +27,7 @@ class Order extends Model
         'subtotal' => 'decimal:2',
         'tax' => 'decimal:2',
         'total' => 'decimal:2',
+        'discount' => 'decimal:2',
         'unique_code' => 'integer',
     ];
 
@@ -36,6 +39,11 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public static function generateOrderNumber(): string
@@ -55,9 +63,13 @@ class Order extends Model
         return $code;
     }
 
-    // TODO: refund status + refunded_at timestamps
     public function getTotalTransferAttribute(): float
     {
         return (float) $this->total + ($this->unique_code ?? 0);
+    }
+
+    public function getDiscountedSubtotalAttribute(): float
+    {
+        return (float) $this->subtotal - (float) $this->discount;
     }
 }

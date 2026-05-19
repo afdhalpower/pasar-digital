@@ -36,7 +36,7 @@
 
                 @foreach($order->items as $item)
                 <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
-                    <span>{{ $item->product->name }} <span style="font-size:0.8rem;">x{{ $item->quantity }}</span></span>
+                    <span>{{ $item->product?->name ?? 'Produk Dihapus' }} <span style="font-size:0.8rem;">x{{ $item->quantity }}</span></span>
                     <span style="color: var(--color-on-surface);">Rp {{ number_format($item->total, 0, ',', '.') }}</span>
                 </div>
                 @endforeach
@@ -72,11 +72,12 @@
             </p>
         </div>
 
-        <div style="display: flex; gap: 12px; justify-content: center; margin-top: var(--space-5);">
+        <div style="display: flex; gap: 12px; justify-content: center; margin-top: var(--space-5); flex-wrap: wrap;">
             <a href="{{ route('buyer.orders') }}" class="btn btn-primary btn-pill" style="padding: 12px 28px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
                 Lihat Pesanan Saya
             </a>
+            <a href="{{ route('buyer.order.invoice', $order) }}" target="_blank" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">Lihat Invoice</a>
             <a href="{{ route('catalog.index') }}" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">Lanjut Belanja</a>
         </div>
     </div>

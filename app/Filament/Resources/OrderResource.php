@@ -73,10 +73,12 @@ class OrderResource extends Resource
                 Section::make('Ringkasan Keuangan')
                     ->schema([
                         TextEntry::make('subtotal')->label('Subtotal')->money('IDR'),
+                        TextEntry::make('discount')->label('Diskon')->money('IDR'),
                         TextEntry::make('tax')->label('Pajak')->money('IDR'),
                         TextEntry::make('total')->label('Total')->money('IDR'),
                         TextEntry::make('unique_code')->label('Kode Unik'),
                         TextEntry::make('total_transfer')->label('Total Transfer')->money('IDR'),
+                        TextEntry::make('coupon.code')->label('Kupon'),
                     ])->columns(3),
             ]);
     }
@@ -132,6 +134,11 @@ class OrderResource extends Resource
                             ->numeric()
                             ->prefix('Rp')
                             ->disabled(),
+                        Components\TextInput::make('discount')
+                            ->label('Diskon')
+                            ->numeric()
+                            ->prefix('Rp')
+                            ->disabled(),
                         Components\TextInput::make('unique_code')
                             ->label('Kode Unik')
                             ->numeric()
@@ -169,6 +176,15 @@ class OrderResource extends Resource
                     ->label('Kode Unik')
                     ->alignCenter()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('discount')
+                    ->label('Diskon')
+                    ->money('IDR')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('coupon.code')
+                    ->label('Kupon')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('total')
                     ->label('Total')
                     ->money('IDR')

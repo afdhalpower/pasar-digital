@@ -37,7 +37,7 @@
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                         <label for="password" style="font-size: 0.875rem; font-weight: 500; color: var(--color-on-surface);">Password</label>
-                        <a href="#" style="font-size: 0.75rem; color: var(--color-primary); text-decoration: none;">Lupa Password?</a>
+                        <a href="{{ route('password.request') }}" style="font-size: 0.75rem; color: var(--color-primary); text-decoration: none;">Lupa Password?</a>
                     </div>
                     <input type="password" name="password" id="password" class="input-field" placeholder="••••••••" required autocomplete="current-password">
                 </div>

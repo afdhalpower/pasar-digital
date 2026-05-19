@@ -2,6 +2,8 @@
 
 @section('title', 'Produk Saya')
 
+@php use Illuminate\Support\Facades\URL; @endphp
+
 @section('content')
 <div class="container" style="padding-top: 120px; padding-bottom: var(--space-8); min-height: 85vh;">
     <div style="display: grid; grid-template-columns: 280px 1fr; gap: var(--space-5);" class="dashboard-grid">
@@ -46,9 +48,32 @@
                                     
                                     <div class="download-card-meta">
                                         <span>Dipesan pada: {{ $item->created_at->format('d M Y') }}</span>
-                                        <span>No. Pesanan: <strong style="color: var(--color-on-surface);">{{ $item->order->order_number }}</strong></span>
+                                        <span>No. Pesanan: <strong style="color: var(--color-on-surface);">{{ $item->order?->order_number ?? '-' }}</strong></span>
                                     </div>
                                 </div>
+
+                                @if($item->product->type === 'software')
+                                    @php
+                                        $licenses = $item->licenses;
+                                    @endphp
+                                    @if($licenses->isNotEmpty())
+                                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-outline-variant);">
+                                            <span class="label-sm" style="color: var(--color-primary); margin-bottom: 6px; display:block;">License Key</span>
+                                            @foreach($licenses as $license)
+                                                <div style="display: flex; align-items: center; gap: 8px; font-family: monospace; font-size: 0.75rem; background: var(--color-surface-container-high); padding: 4px 8px; border-radius: var(--radius-sm); margin-bottom: 4px;">
+                                                    <span style="flex: 1; color: var(--color-on-surface); letter-spacing: 0.05em;">{{ $license->license_key }}</span>
+                                                    <span style="color: var(--color-on-surface-variant); font-size: 0.65rem; font-family: sans-serif;">
+                                                        @if($license->activated_at)
+                                                            Aktif
+                                                        @else
+                                                            Belum Aktif
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                @endif
                                 
                                 <div style="display: flex; gap: 8px; margin-top: var(--space-2);">
                                     @if ($item->product->demo_url)
@@ -56,7 +81,7 @@
                                             Demo
                                         </a>
                                     @endif
-                                    <a href="{{ route('buyer.download-file', $item->product) }}" class="btn btn-primary" style="flex: 2; padding: 10px; font-size: 0.8rem; border-radius: var(--radius-md);">
+                                    <a href="{{ URL::temporarySignedRoute('buyer.download-file', now()->addHours(1), $item->product) }}" class="btn btn-primary" style="flex: 2; padding: 10px; font-size: 0.8rem; border-radius: var(--radius-md);">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                                         Unduh
                                     </a>

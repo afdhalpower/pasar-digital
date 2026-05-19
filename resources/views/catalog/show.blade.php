@@ -3,6 +3,13 @@
 @section('title', $product->name)
 @section('meta_description', $product->short_description ?? Str::limit(strip_tags($product->description), 160))
 
+@push('meta')
+    @if(isset($ogImage) && $ogImage)
+        <meta property="og:image" content="{{ $ogImage }}">
+        <meta name="twitter:image" content="{{ $ogImage }}">
+    @endif
+@endpush
+
 @push('styles')
 <style>
 .star-input { display: none; }

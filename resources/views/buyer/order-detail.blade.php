@@ -70,7 +70,7 @@ $steps = [
                     </div>
                     <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
                         <span>Metode Pembayaran</span>
-                        <span style="color: var(--color-on-surface); text-transform: uppercase;">{{ str_replace('_', ' ', $order->payment_method) }}</span>
+                        <span style="color: var(--color-on-surface); text-transform: uppercase;">{{ $order->payment_method ? str_replace('_', ' ', $order->payment_method) : '-' }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
                         <span>Status Pembayaran</span>
@@ -105,6 +105,25 @@ $steps = [
                 </div>
             </div>
 
+            {{-- Actions --}}
+            <div style="display: flex; gap: 12px; margin-top: var(--space-4); justify-content: flex-end; flex-wrap: wrap;">
+                <a href="{{ route('buyer.order.invoice', $order) }}" target="_blank" class="btn btn-secondary" style="padding: 10px 20px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Lihat Invoice
+                </a>
+                @if(in_array($order->status, ['pending', 'processing']))
+                <div style="margin-top: var(--space-4); text-align: right;">
+                    <form method="POST" action="{{ route('buyer.order.cancel', $order) }}" onsubmit="return confirm('Yakin ingin membatalkan pesanan ini?')">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary" style="border-color: var(--color-error); color: var(--color-error); padding: 10px 20px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                            Batalkan Pesanan
+                        </button>
+                    </form>
+                </div>
+            @endif
+            </div>
+
             {{-- Items --}}
             <div style="background: var(--color-surface-container); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: var(--space-4);">
                 <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600; margin-bottom: var(--space-3);">Produk</h3>
@@ -112,7 +131,7 @@ $steps = [
                     @foreach($order->items as $item)
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-outline-variant); {{ $loop->last ? 'border-bottom: none; padding-bottom: 0;' : '' }}">
                             <div>
-                                <p style="font-weight: 600; color: var(--color-on-surface);">{{ $item->product->name }}</p>
+                                <p style="font-weight: 600; color: var(--color-on-surface);">{{ $item->product?->name ?? 'Produk Dihapus' }}</p>
                                 <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">x{{ $item->quantity }} &times; Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                             </div>
                             <span style="font-weight: 600; color: var(--color-primary);">Rp {{ number_format($item->total, 0, ',', '.') }}</span>
@@ -125,6 +144,12 @@ $steps = [
                         <span>Subtotal</span>
                         <span>Rp {{ number_format($order->subtotal, 0, ',', '.') }}</span>
                     </div>
+                    @if($order->discount > 0)
+                        <div style="display: flex; justify-content: space-between; color: var(--color-success);">
+                            <span>Diskon Kupon</span>
+                            <span>- Rp {{ number_format($order->discount, 0, ',', '.') }}</span>
+                        </div>
+                    @endif
                     <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
                         <span>Kode Unik</span>
                         <span style="color: var(--color-warning);">+ Rp {{ number_format($order->unique_code, 0, ',', '.') }}</span>

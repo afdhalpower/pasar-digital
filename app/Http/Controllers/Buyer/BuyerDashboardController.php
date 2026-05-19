@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Review;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+    use App\Models\Order;
+    use App\Models\OrderItem;
+    use App\Models\Product;
+    use App\Models\Review;
+    use App\Notifications\OrderStatusChanged;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Hash;
+    use Illuminate\Validation\Rules\Password;
 
 class BuyerDashboardController extends Controller
 {
@@ -97,6 +98,17 @@ class BuyerDashboardController extends Controller
         return view('buyer.order-detail', compact('order'));
     }
 
+    public function invoice(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $order->load('items.product', 'user');
+
+        return view('buyer.invoice', compact('order'));
+    }
+
     public function orderConfirmation(Order $order)
     {
         if ($order->user_id !== Auth::id()) {
@@ -119,7 +131,7 @@ class BuyerDashboardController extends Controller
             })
             ->pluck('id');
 
-        $downloadsQuery = OrderItem::with(['product.category', 'order'])
+        $downloadsQuery = OrderItem::with(['product.category', 'order', 'licenses'])
             ->whereIn('order_id', $paidOrderIds);
 
         // Search by product name
@@ -161,6 +173,8 @@ class BuyerDashboardController extends Controller
 
         $media = $product->getFirstMedia('file');
         $fileName = $media ? $media->file_name : basename($filePath);
+
+        $product->increment('download_count');
 
         return response()->download($filePath, $fileName);
     }
@@ -221,6 +235,27 @@ class BuyerDashboardController extends Controller
         }
 
         return back()->with('success', $wishlisted ? 'Produk ditambahkan ke Favorit.' : 'Produk dihapus dari Favorit.');
+    }
+
+    public function cancelOrder(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if (!in_array($order->status, ['pending', 'processing'])) {
+            return back()->with('error', 'Pesanan tidak dapat dibatalkan.');
+        }
+
+        $oldStatus = $order->status;
+        $order->update([
+            'status' => 'cancelled',
+            'payment_status' => $order->payment_status === 'paid' ? 'refunded' : $order->payment_status,
+        ]);
+
+        $order->user->notify(new OrderStatusChanged($order, $oldStatus, 'cancelled'));
+
+        return redirect()->route('buyer.orders')->with('success', 'Pesanan berhasil dibatalkan.');
     }
 
     public function storeReview(Request $request, Product $product)

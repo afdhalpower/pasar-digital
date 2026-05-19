@@ -79,7 +79,7 @@
                                 <tr>
                                     <td style="font-weight: 600; color: var(--color-on-surface);">{{ $order->order_number }}</td>
                                     <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
-                                    <td>{{ strtoupper(str_replace('_', ' ', $order->payment_method)) }}</td>
+                                    <td>{{ $order->payment_method ? strtoupper(str_replace('_', ' ', $order->payment_method)) : '-' }}</td>
                                     <td style="font-weight: 600; color: var(--color-primary);">Rp {{ number_format($order->total, 0, ',', '.') }}</td>
                                     <td>
                                         @if ($order->payment_status === 'paid')

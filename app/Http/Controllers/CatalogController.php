@@ -62,6 +62,8 @@ class CatalogController extends Controller
 
         $wishlistIds = Auth::check() ? Auth::user()->wishlistProducts()->pluck('product_id')->toArray() : [];
 
-        return view('catalog.show', compact('product', 'relatedProducts', 'wishlistIds'));
+        $ogImage = $product->getThumbnailUrl();
+
+        return view('catalog.show', compact('product', 'relatedProducts', 'wishlistIds', 'ogImage'));
     }
 }

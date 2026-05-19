@@ -161,18 +161,49 @@
                 <h3 style="font-family:var(--font-headline); font-size:1.25rem; font-weight:600; margin-bottom:var(--space-3);">Ringkasan Belanja</h3>
                 @php
                     $subtotal = $cartItems->sum(fn ($i) => $i->product->effective_price * $i->quantity);
+                    $appliedCoupon = session('applied_coupon') ? \App\Models\Coupon::find(session('applied_coupon')) : null;
+                    $discount = $appliedCoupon ? $appliedCoupon->calculateDiscount($subtotal) : 0;
                 @endphp
                 <div class="cart-summary-row">
                     <span>Subtotal ({{ $cartItems->sum('quantity') }} item)</span>
                     <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                 </div>
+
+                {{-- Coupon --}}
+                <div style="border-top: 1px solid var(--color-outline-variant); padding-top: 12px; margin-top: 8px;">
+                    @if($appliedCoupon)
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <div>
+                                <span style="font-size:0.8rem; font-weight:600; color:var(--color-success);">Kupon: {{ $appliedCoupon->code }}</span>
+                                <span style="font-size:0.75rem; color:var(--color-on-surface-variant); display:block;">{{ $appliedCoupon->name }}</span>
+                            </div>
+                            <form action="{{ route('cart.coupon.remove') }}" method="POST" style="margin:0;">
+                                @csrf
+                                <button type="submit" style="background:none; border:none; cursor:pointer; color:var(--color-error); font-size:0.75rem;">Hapus</button>
+                            </form>
+                        </div>
+                    @else
+                        <form action="{{ route('cart.coupon.apply') }}" method="POST" style="display:flex; gap:8px;">
+                            @csrf
+                            <input type="text" name="code" placeholder="Masukkan kode kupon" style="flex:1; padding:8px 12px; background:var(--color-surface-container-high); border:1px solid var(--color-outline-variant); border-radius:var(--radius-md); color:var(--color-on-surface); font-size:0.8rem;">
+                            <button type="submit" class="btn btn-primary" style="padding:8px 12px; font-size:0.75rem;">Pakai</button>
+                        </form>
+                    @endif
+                </div>
+
                 <div class="cart-summary-row">
                     <span>Pajak</span>
                     <span>Rp 0</span>
                 </div>
+                @if($discount > 0)
+                    <div class="cart-summary-row" style="color: var(--color-success);">
+                        <span>Diskon Kupon</span>
+                        <span>- Rp {{ number_format($discount, 0, ',', '.') }}</span>
+                    </div>
+                @endif
                 <div class="cart-summary-row total">
                     <span>Total</span>
-                    <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                    <span>Rp {{ number_format(max($subtotal - $discount, 0), 0, ',', '.') }}</span>
                 </div>
                 <form action="{{ route('cart.checkout') }}" method="POST" style="margin-top:var(--space-3);">
                     @csrf
