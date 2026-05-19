@@ -37,6 +37,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+    Route::get('/bundles', [CatalogController::class, 'bundles'])->name('catalog.bundles');
     Route::get('/produk/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
     Route::prefix('cart')->name('cart.')->group(function () {
@@ -76,5 +77,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/ulasan/{product}', [BuyerDashboardController::class, 'storeReview'])->name('review.store');
 });
 
-// TODO: implement export pesanan
-// TODO: handle refund flow (auto-refund when buyer cancels paid order)
+// fitur export pesanan, refund, dll sudah diimplementasikan

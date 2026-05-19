@@ -54,23 +54,33 @@
             </div>
         </div>
 
-        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: var(--space-3); text-align: left;">
-            <h4 style="font-size: 0.875rem; font-weight: 600; color: var(--color-warning); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Instruksi Pembayaran
-            </h4>
-            <p style="font-size: 0.8rem; color: var(--color-on-surface-variant); line-height: 1.6;">
-                Silakan transfer <strong style="color: var(--color-on-surface);">tepat Rp {{ number_format($order->total_transfer, 0, ',', '.') }}</strong> (termasuk kode unik <strong style="color: var(--color-warning);">{{ $order->unique_code }}</strong>) ke rekening berikut:
-            </p>
-            <div style="background: var(--color-surface-container-high); border-radius: var(--radius-md); padding: 12px; margin-top: 10px;">
-                <p style="font-size: 0.8rem; color: var(--color-on-surface-variant);">Bank BCA</p>
-                <p style="font-size: 1rem; font-weight: 700; color: var(--color-on-surface); letter-spacing: 0.05em;">1234567890</p>
-                <p style="font-size: 0.8rem; color: var(--color-on-surface-variant);">a.n. PT PublikDigital Indonesia</p>
+            <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: var(--space-3); text-align: left;">
+                <h4 style="font-size: 0.875rem; font-weight: 600; color: var(--color-warning); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    Instruksi Pembayaran
+                </h4>
+                <p style="font-size: 0.8rem; color: var(--color-on-surface-variant); line-height: 1.6;">
+                    Silakan transfer <strong style="color: var(--color-on-surface);">tepat Rp {{ number_format($order->total_transfer, 0, ',', '.') }}</strong> (termasuk kode unik <strong style="color: var(--color-warning);">{{ $order->unique_code }}</strong>) ke salah satu rekening berikut:
+                </p>
+                @forelse($bankAccounts as $bank)
+                    <div style="background: var(--color-surface-container-high); border-radius: var(--radius-md); padding: 12px; margin-top: 10px; {{ !$loop->last ? 'margin-bottom: 8px;' : '' }}">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <p style="font-size: 0.8rem; font-weight: 600; color: var(--color-on-surface);">{{ $bank->bank_name }}</p>
+                            <button onclick="navigator.clipboard.writeText('{{ $bank->account_number }}')" style="background:none; border:none; cursor:pointer; color:var(--color-primary); font-size:0.75rem; display:flex; align-items:center; gap:4px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Salin
+                            </button>
+                        </div>
+                        <p style="font-size: 1rem; font-weight: 700; color: var(--color-on-surface); letter-spacing: 0.05em; font-family: monospace; margin-top: 4px;">{{ $bank->account_number }}</p>
+                        <p style="font-size: 0.8rem; color: var(--color-on-surface-variant);">a.n. {{ $bank->account_holder }}</p>
+                    </div>
+                @empty
+                    <p style="font-size: 0.8rem; color: var(--color-error);">Belum ada informasi rekening. Hubungi admin.</p>
+                @endforelse
+                <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 10px;">
+                    Transfer harus <strong>tepat</strong> termasuk kode unik agar admin dapat memverifikasi pesanan dengan mudah. Konfirmasi pembayaran melalui <strong>Admin Panel</strong> setelah transfer.
+                </p>
             </div>
-            <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 10px;">
-                Transfer harus <strong>tepat</strong> termasuk kode unik agar admin dapat memverifikasi pesanan dengan mudah. Konfirmasi pembayaran melalui <strong>Admin Panel</strong> setelah transfer.
-            </p>
-        </div>
 
         <div style="display: flex; gap: 12px; justify-content: center; margin-top: var(--space-5); flex-wrap: wrap;">
             <a href="{{ route('buyer.orders') }}" class="btn btn-primary btn-pill" style="padding: 12px 28px;">

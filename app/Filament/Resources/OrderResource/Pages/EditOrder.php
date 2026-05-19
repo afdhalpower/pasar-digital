@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\License;
+use App\Notifications\OrderRefunded;
 use App\Notifications\OrderStatusChanged;
 use App\Notifications\PaymentReceived;
 use Filament\Actions;
@@ -78,14 +79,33 @@ class EditOrder extends EditRecord
                 ->requiresConfirmation()
                 ->action(function () {
                     $oldStatus = $this->record->status;
-                    $this->record->update(['status' => 'cancelled']);
-                    $this->refreshFormData(['status']);
+                    $newStatus = $this->record->payment_status === 'paid' ? 'refunded' : 'cancelled';
+                    $this->record->update([
+                        'status' => 'cancelled',
+                        'payment_status' => $newStatus,
+                    ]);
+                    $this->refreshFormData(['status', 'payment_status']);
 
                     if ($oldStatus !== 'cancelled') {
                         $this->record->user->notify(new OrderStatusChanged(
                             $this->record, $oldStatus, 'cancelled'
                         ));
                     }
+                }),
+
+            Action::make('refund')
+                ->label('Refund')
+                ->icon('heroicon-o-arrow-uturn-left')
+                ->color('warning')
+                ->requiresConfirmation()
+                ->visible(fn () => $this->record->payment_status === 'paid')
+                ->action(function () {
+                    $this->record->update([
+                        'payment_status' => 'refunded',
+                        'status' => 'cancelled',
+                    ]);
+                    $this->refreshFormData(['payment_status', 'status']);
+                    $this->record->user->notify(new OrderRefunded($this->record));
                 }),
 
             Actions\DeleteAction::make(),

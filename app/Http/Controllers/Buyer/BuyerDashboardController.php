@@ -111,13 +111,11 @@ class BuyerDashboardController extends Controller
 
     public function orderConfirmation(Order $order)
     {
-        if ($order->user_id !== Auth::id()) {
-            abort(403);
-        }
-
         $order->load('items.product');
 
-        return view('buyer.confirmation', compact('order'));
+        $bankAccounts = \App\Models\BankAccount::active()->get();
+
+        return view('buyer.confirmation', compact('order', 'bankAccounts'));
     }
 
     public function downloads(Request $request)

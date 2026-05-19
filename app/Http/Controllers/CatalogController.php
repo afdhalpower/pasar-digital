@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bundle;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -42,6 +43,16 @@ class CatalogController extends Controller
         $wishlistIds = Auth::check() ? Auth::user()->wishlistProducts()->pluck('product_id')->toArray() : [];
 
         return view('catalog.index', compact('products', 'categories', 'wishlistIds'));
+    }
+
+    public function bundles()
+    {
+        $bundles = Bundle::with('products')
+            ->active()
+            ->latest()
+            ->paginate(12);
+
+        return view('bundles.index', compact('bundles'));
     }
 
     public function show(string $slug)

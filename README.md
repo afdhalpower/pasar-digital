@@ -22,6 +22,7 @@
 - **Toast Global** — Flash message auto-dismiss dengan Alpine.js
 - **Lupa Password** — Reset password via email link (Laravel Password Broker)
 - **Invoice** — Halaman invoice print-optimized dengan cetak via `window.print()`
+- **Multi-Bank Payment** — Informasi rekening bank dinamis (BCA, Mandiri, BSI) dengan tombol salin nomor rekening
 - **SEO** — `sitemap.xml` dinamis, `robots.txt`, OG tags (title, description, image), canonical URL, JSON-LD Organization schema
 - **Mobile Navigation** — Hamburger toggle, responsive breakpoint, menu khusus mobile
 - **Pencarian Global** — Search input di navbar mengarah ke `/katalog?search=`
@@ -39,6 +40,10 @@
 - **Quick Actions Order** — 5 tombol aksi (Set Lunas, Set Selesai, Proses Pesanan, Batalkan, Hapus) + auto-generate license key
 - **Manajemen Kupon** — CRUD kupon diskon (persentase/nominal, min order, max uses, expiry, toggle aktif)
 - **Manajemen Lisensi** — View & filter license key per produk/pembeli
+- **Export CSV** — Tombol export pesanan ke CSV di header ListOrders dengan BOM UTF-8
+- **Refund** — Action Refund di EditOrder (visible jika payment_status=paid) + notifikasi `OrderRefunded`
+- **Manajemen Rekening Bank** — CRUD bank accounts di navigation group Settings
+- **Manajemen Bundel Produk** — CRUD bundles dengan multiple product selection, display diskon otomatis
 - **Chat Admin** — Lihat & balas percakapan, mulai chat baru ke buyer
 - **Login Page** — Kartu kredensial dev (admin + buyer) di environment lokal
 
@@ -73,8 +78,10 @@ republikdigital/
 ├── DESIGN.md
 ├── app/
 │   ├── Filament/
-│   │   ├── Resources/           # Category, Product, Order, User, Conversation, Coupons, Licenses
-│   │   └── Widgets/             # StatsOverview, TopProducts, QuickActions, SalesChart, RecentOrders, TopBuyers
+│   │   ├── Resources/Bundles/       # BundleResource (simple CRUD)
+│   │   ├── Resources/BankAccounts/  # BankAccountResource (Pages: List, Create, Edit) + Form + Table
+│   │   ├── Resources/               # Category, Product, Order, User, Conversation, Coupons, Licenses
+│   │   └── Widgets/                 # StatsOverview, TopProducts, QuickActions, SalesChart, RecentOrders, TopBuyers
 │   ├── Http/Controllers/
 │   │   ├── Auth/                # Login, Register, ForgotPassword, ResetPassword
 │   │   ├── Buyer/               # BuyerDashboardController (orders, downloads, wishlist, reviews, profile)
@@ -85,7 +92,9 @@ republikdigital/
 │   │   └── SitemapController.php
 │   ├── Models/
 │   │   ├── Coupon.php           # Kupon diskon dengan isValid() + calculateDiscount()
-│   │   └── License.php          # License key dengan generateKey()
+│   │   ├── License.php          # License key dengan generateKey()
+│   │   ├── BankAccount.php      # Rekening bank dengan scope active()
+│   │   └── Bundle.php           # Bundel produk dengan totalOriginalPrice() + discountPercentage()
 ├── database/
 │   └── migrations/
 ├── resources/
@@ -153,6 +162,7 @@ php artisan serve
 |---|---|
 | `/` | Beranda |
 | `/katalog` | Katalog produk |
+| `/bundles` | Bundel produk hemat |
 | `/produk/{slug}` | Detail produk (wishlist toggle + review) |
 | `/cart` | Keranjang belanja + kupon |
 | `/cart/coupon/apply` | Apply kode kupon (POST) |
@@ -177,6 +187,8 @@ php artisan serve
 | `/admin` | Panel admin Filament |
 | `/admin/coupons` | Manajemen kupon admin |
 | `/admin/licenses` | Manajemen lisensi admin |
+| `/admin/bundles` | Manajemen bundel produk |
+| `/admin/bank-accounts` | Manajemen rekening bank |
 
 ---
 
@@ -196,6 +208,28 @@ php artisan serve
 - `Coupon::isValid()` mengecek: `is_active`, `expires_at`, `max_uses` vs `used_count`.
 - `Coupon::calculateDiscount()` support tipe `percentage` (persen dari subtotal) dan `fixed` (nominal tetap, min dari nilai atau subtotal).
 - Diskon disimpan di kolom `orders.discount` dan `orders.coupon_id` untuk histori.
+
+### Refund Flow
+- Admin dapat merefund pesanan dengan `payment_status = paid` melalui action "Refund" di EditOrder.
+- Notifikasi `OrderRefunded` dikirim ke buyer.
+- Status pesanan diubah jadi `refunded`, payment_status jadi `refunded`.
+
+### Export CSV
+- Tombol "Export CSV" di header tabel ListOrders Filament.
+- Export semua orders berdasarkan filter yang aktif.
+- File CSV dengan BOM UTF-8 untuk kompatibilitas Excel/Google Sheets.
+- Kolom: ID, Buyer, Produk, Status Pembayaran, Status Pesanan, Total, Tanggal.
+
+### Bank Accounts
+- CRUD rekening bank di `/admin/bank-accounts` (navigation group Settings).
+- Tiga bank default (BCA, Mandiri, BSI) via seeder.
+- Tampil di halaman konfirmasi pembayaran buyer dengan tombol salin nomor rekening.
+
+### Bundles (Product Bundles)
+- CRUD bundle produk di Filament dengan seleksi multiple product.
+- Harga bundle dihitung per bundle (bukan diskon per produk).
+- Menampilkan persentase hemat otomatis (`discountPercentage()`).
+- Halaman publik `/bundles` dengan daftar bundel + produk included + badge diskon.
 
 ### License Auto-Generation
 - License key (format `XXXX-XXXX-XXXX-XXXX`) digenerate saat admin klik "Set Selesai" di Filament Order.

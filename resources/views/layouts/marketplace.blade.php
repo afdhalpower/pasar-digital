@@ -53,6 +53,7 @@
             <ul class="nav-links" :class="{ 'is-open': mobileOpen }" @click.away="mobileOpen = false">
                 <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a></li>
                 <li><a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'active' : '' }}">Katalog</a></li>
+                <li><a href="{{ route('catalog.bundles') }}" class="bundle-nav-link {{ request()->routeIs('catalog.bundles') ? 'active' : '' }}">Bundel</a></li>
                 <li class="nav-search-item">
                     <form action="{{ route('catalog.index') }}" method="GET" style="display:flex;">
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="input-field" style="padding:6px 12px; font-size:0.8rem; min-width:200px;" aria-label="Cari produk">
