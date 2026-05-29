@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Produk Saya')
+@section('title', __('marketplace.downloads_title'))
 
 @php use Illuminate\Support\Facades\URL; @endphp
 
@@ -11,17 +11,17 @@
 
         <main class="dashboard-content-area animate-in">
             <div style="margin-bottom: var(--space-4);">
-                <span class="label-sm" style="color: var(--color-primary);">Produk Digital Anda</span>
-                <h1 class="headline-md" style="margin-top: 4px;">Produk Saya</h1>
-                <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">Akses dan unduh seluruh berkas produk digital yang telah sukses Anda beli.</p>
+                <span class="label-sm" style="color: var(--color-primary);">{{ __('marketplace.downloads_badge') }}</span>
+                <h1 class="headline-md" style="margin-top: 4px;">{{ __('marketplace.downloads_title') }}</h1>
+                <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">{{ __('marketplace.downloads_subtitle') }}</p>
             </div>
 
             {{-- Search --}}
             <form method="GET" action="{{ route('buyer.downloads') }}" style="display: flex; gap: 12px; margin-bottom: var(--space-4);">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="input-field" style="max-width: 300px;">
-                <button type="submit" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">Cari</button>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('marketplace.downloads_search') }}" class="input-field" style="max-width: 300px;">
+                <button type="submit" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">{{ __('marketplace.downloads_search_button') }}</button>
                 @if(request()->filled('search'))
-                    <a href="{{ route('buyer.downloads') }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.8rem;">Reset</a>
+                    <a href="{{ route('buyer.downloads') }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.8rem;">{{ __('marketplace.downloads_reset') }}</a>
                 @endif
             </form>
 
@@ -39,7 +39,7 @@
                             <div class="download-card-body">
                                 <div>
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                        <span class="label-sm" style="color: var(--color-primary);">{{ $item->product->category->name ?? 'Kategori' }}</span>
+                                        <span class="label-sm" style="color: var(--color-primary);">{{ $item->product->category->name ?? __('marketplace.product_card_category') }}</span>
                                         <span class="label-sm" style="color: var(--color-on-surface-variant); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: var(--radius-sm); font-size: 0.65rem;">{{ strtoupper($item->product->type) }}</span>
                                     </div>
                                     <h3 class="download-card-title">
@@ -47,8 +47,8 @@
                                     </h3>
                                     
                                     <div class="download-card-meta">
-                                        <span>Dipesan pada: {{ $item->created_at->format('d M Y') }}</span>
-                                        <span>No. Pesanan: <strong style="color: var(--color-on-surface);">{{ $item->order?->order_number ?? '-' }}</strong></span>
+                                        <span>{{ __('marketplace.downloads_ordered_at') }} {{ $item->created_at->format('d M Y') }}</span>
+                                        <span>{{ __('marketplace.downloads_order_number') }} <strong style="color: var(--color-on-surface);">{{ $item->order?->order_number ?? '-' }}</strong></span>
                                     </div>
                                 </div>
 
@@ -58,15 +58,15 @@
                                     @endphp
                                     @if($licenses->isNotEmpty())
                                         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-outline-variant);">
-                                            <span class="label-sm" style="color: var(--color-primary); margin-bottom: 6px; display:block;">License Key</span>
+                                            <span class="label-sm" style="color: var(--color-primary); margin-bottom: 6px; display:block;">{{ __('marketplace.downloads_license_key') }}</span>
                                             @foreach($licenses as $license)
                                                 <div style="display: flex; align-items: center; gap: 8px; font-family: monospace; font-size: 0.75rem; background: var(--color-surface-container-high); padding: 4px 8px; border-radius: var(--radius-sm); margin-bottom: 4px;">
                                                     <span style="flex: 1; color: var(--color-on-surface); letter-spacing: 0.05em;">{{ $license->license_key }}</span>
                                                     <span style="color: var(--color-on-surface-variant); font-size: 0.65rem; font-family: sans-serif;">
                                                         @if($license->activated_at)
-                                                            Aktif
+                                                            {{ __('marketplace.downloads_license_active') }}
                                                         @else
-                                                            Belum Aktif
+                                                            {{ __('marketplace.downloads_license_inactive') }}
                                                         @endif
                                                     </span>
                                                 </div>
@@ -78,12 +78,12 @@
                                 <div style="display: flex; gap: 8px; margin-top: var(--space-2);">
                                     @if ($item->product->demo_url)
                                         <a href="{{ $item->product->demo_url }}" target="_blank" class="btn btn-secondary" style="flex: 1; padding: 10px; font-size: 0.8rem; border-radius: var(--radius-md);">
-                                            Demo
+                                            {{ __('marketplace.downloads_demo') }}
                                         </a>
                                     @endif
                                     <a href="{{ URL::temporarySignedRoute('buyer.download-file', now()->addHours(1), $item->product) }}" class="btn btn-primary" style="flex: 2; padding: 10px; font-size: 0.8rem; border-radius: var(--radius-md);">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                                        Unduh
+                                        {{ __('marketplace.downloads_download') }}
                                     </a>
                                 </div>
 
@@ -94,7 +94,7 @@
                                 @if($existingReview)
                                     <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--color-outline-variant);">
                                         <span style="font-size: 0.75rem; color: var(--color-on-surface-variant);">
-                                            Ulasan Anda: 
+                                            {{ __('marketplace.downloads_your_review') }} 
                                             @for($i = 1; $i <= 5; $i++)
                                                 <span style="color: {{ $i <= $existingReview->rating ? 'var(--color-warning)' : 'var(--color-outline-variant)' }};">&#9733;</span>
                                             @endfor
@@ -103,7 +103,7 @@
                                 @else
                                     <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--color-outline-variant);">
                                         <a href="{{ route('catalog.show', $item->product->slug) }}#review-form" style="font-size: 0.75rem; color: var(--color-primary); text-decoration: none; font-weight: 500;">
-                                            + Beri Ulasan
+                                            {{ __('marketplace.downloads_add_review') }}
                                         </a>
                                     </div>
                                 @endif
@@ -115,20 +115,20 @@
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-outline)" stroke-width="1.5" style="margin-bottom:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                         <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;">
                             @if(request()->filled('search'))
-                                Produk tidak ditemukan
+                                {{ __('marketplace.downloads_empty_search') }}
                             @else
-                                Belum ada produk yang dibeli
+                                {{ __('marketplace.downloads_empty_text') }}
                             @endif
                         </h3>
                         <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: 20px;">
                             @if(request()->filled('search'))
-                                Coba ubah kata kunci pencarian.
+                                {{ __('marketplace.downloads_empty_search_text') }}
                             @else
-                                Silakan beli produk digital di katalog kami terlebih dahulu untuk melihat unduhan Anda di sini.
+                                {{ __('marketplace.downloads_empty_cta_text') }}
                             @endif
                         </p>
                         @unless(request()->filled('search'))
-                            <a href="{{ route('catalog.index') }}" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.875rem;">Telusuri Katalog</a>
+                            <a href="{{ route('catalog.index') }}" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.875rem;">{{ __('marketplace.downloads_empty_cta') }}</a>
                         @endunless
                     </div>
                 @endforelse

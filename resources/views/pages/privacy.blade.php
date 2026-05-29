@@ -1,15 +1,15 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Kebijakan Privasi')
+@section('title', __('marketplace.privacy_title'))
 @section('meta_description', 'Kebijakan privasi PublikDigital — bagaimana kami mengelola dan melindungi data Anda.')
 
 @section('content')
 <section class="section" style="padding-top:120px;">
     <div class="container" style="max-width:720px;">
         <div style="text-align:center; margin-bottom:var(--space-6);">
-            <span class="hero-badge">Privasi</span>
-            <h1 class="headline-sm" style="margin-top:var(--space-2);">Kebijakan Privasi</h1>
-            <p class="hero-subtitle" style="margin:var(--space-2) auto 0;">Terakhir diperbarui: Mei 2026</p>
+            <span class="hero-badge">{{ __('marketplace.privacy_badge') }}</span>
+            <h1 class="headline-sm" style="margin-top:var(--space-2);">{{ __('marketplace.privacy_heading') }}</h1>
+            <p class="hero-subtitle" style="margin:var(--space-2) auto 0;">{{ __('marketplace.privacy_updated') }}</p>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:var(--space-4); color:var(--color-on-surface-variant); line-height:1.8; font-size:0.95rem;">

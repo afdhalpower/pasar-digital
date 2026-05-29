@@ -28,7 +28,7 @@ class CartController extends Controller
         $request->validate(['quantity' => 'integer|min:1|max:99']);
 
         if (!$product->is_active) {
-            return back()->with('error', 'Produk tidak tersedia.');
+            return back()->with('error', __('marketplace.product_not_available'));
         }
 
         $existing = CartItem::where('user_id', Auth::id())
@@ -45,7 +45,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+        return redirect()->route('cart.index')->with('success', __('marketplace.cart_added'));
     }
 
     public function update(Request $request, CartItem $cartItem)
@@ -55,7 +55,7 @@ class CartController extends Controller
         $request->validate(['quantity' => 'required|integer|min:1|max:99']);
         $cartItem->update(array('quantity' => $request->quantity));
 
-        return back()->with('success', 'Jumlah produk diperbarui.');
+        return back()->with('success', __('marketplace.cart_updated'));
     }
 
     public function remove(CartItem $cartItem)
@@ -63,7 +63,7 @@ class CartController extends Controller
         $this->authorizeOwnership($cartItem);
         $cartItem->delete();
 
-        return back()->with('success', 'Produk dihapus dari keranjang.');
+        return back()->with('success', __('marketplace.cart_removed'));
     }
 
     public function applyCoupon(Request $request)
@@ -73,7 +73,7 @@ class CartController extends Controller
         $coupon = Coupon::where('code', $request->code)->first();
 
         if (!$coupon || !$coupon->isValid()) {
-            return back()->with('error', 'Kode kupon tidak valid atau sudah tidak berlaku.');
+            return back()->with('error', __('marketplace.cart_coupon_invalid'));
         }
 
         $cartItems = CartItem::with('product')
@@ -81,25 +81,25 @@ class CartController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
-            return back()->with('error', 'Keranjang belanja kosong.');
+            return back()->with('error', __('marketplace.cart_empty'));
         }
 
         $subtotal = $cartItems->sum(fn ($item) => $item->product->effective_price * $item->quantity);
 
         if ($subtotal < $coupon->min_order_amount) {
             $min = number_format($coupon->min_order_amount, 0, ',', '.');
-            return back()->with('error', "Minimal pesanan Rp {$min} untuk menggunakan kupon ini.");
+            return back()->with('error', __('marketplace.cart_coupon_min_order', ['amount' => number_format($min, 0, ',', '.')]));
         }
 
         session(['applied_coupon' => $coupon->id]);
 
-        return back()->with('success', 'Kupon berhasil diterapkan!');
+        return back()->with('success', __('marketplace.cart_coupon_applied'));
     }
 
     public function removeCoupon()
     {
         session()->forget('applied_coupon');
-        return back()->with('success', 'Kupon berhasil dihapus.');
+        return back()->with('success', __('marketplace.cart_coupon_removed'));
     }
 
     public function checkout()
@@ -109,7 +109,7 @@ class CartController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
-            return back()->with('error', 'Keranjang belanja kosong.');
+            return back()->with('error', __('marketplace.cart_empty'));
         }
 
         $user = Auth::user();
@@ -160,7 +160,7 @@ class CartController extends Controller
         $user->notify(new OrderConfirmation($order));
 
         return redirect()->route('buyer.order.confirmation', $order)
-            ->with('success', 'Pesanan berhasil dibuat! Silakan lakukan pembayaran.');
+            ->with('success', __('marketplace.cart_checkout_success'));
     }
 
     public static function count(): int

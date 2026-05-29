@@ -41,7 +41,7 @@
             <div>
                 <div style="display:flex; align-items:center; justify-content:space-between;">
                     <a href="{{ route('catalog.index', ['category' => $product->category->slug ?? '']) }}" class="chip chip-primary" style="margin-bottom:16px;">
-                        {{ $product->category->name ?? 'Uncategorized' }}
+                        {{ $product->category->name ?? __('marketplace.product_uncategorized') }}
                     </a>
                     @auth
                         @php $isWishlisted = in_array($product->id, $wishlistIds ?? []); @endphp
@@ -61,7 +61,7 @@
                         @for($i = 1; $i <= 5; $i++)
                             <span style="font-size:1rem; color:{{ $i <= round($product->rating) ? 'var(--color-warning)' : 'var(--color-outline-variant)' }};">&#9733;</span>
                         @endfor
-                        <span style="font-size:0.8rem; color:var(--color-on-surface-variant);">{{ number_format($product->rating, 1) }} ({{ $product->review_count }} ulasan)</span>
+                        <span style="font-size:0.8rem; color:var(--color-on-surface-variant);">{{ number_format($product->rating, 1) }} ({{ $product->review_count }} {{ __('marketplace.product_reviews') }})</span>
                     </div>
                 @endif
 
@@ -79,7 +79,7 @@
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </span>
                         <span class="chip" style="background:rgba(255,181,154,0.15); color:var(--color-tertiary); border:none; font-size:0.7rem;">
-                            DISKON {{ round((1 - $product->effective_price / $product->price) * 100) }}%
+                            {{ __('marketplace.product_discount') }} {{ round((1 - $product->effective_price / $product->price) * 100) }}%
                         </span>
                     @endif
                 </div>
@@ -87,13 +87,13 @@
                 {{-- Stats --}}
                 <div style="display:flex; gap:var(--space-4); margin-bottom:var(--space-4); padding:var(--space-2) 0; border-top:1px solid var(--color-outline-variant); border-bottom:1px solid var(--color-outline-variant);">
                     <div class="label-md" style="color:var(--color-on-surface-variant);">
-                        <span style="color:var(--color-on-surface); font-weight:700;">{{ $product->download_count }}</span> Download
+                        <span style="color:var(--color-on-surface); font-weight:700;">{{ $product->download_count }}</span> {{ __('marketplace.product_downloads') }}
                     </div>
                     <div class="label-md" style="color:var(--color-on-surface-variant);">
-                        <span style="color:var(--color-on-surface); font-weight:700;">{{ $product->view_count }}</span> Dilihat
+                        <span style="color:var(--color-on-surface); font-weight:700;">{{ $product->view_count }}</span> {{ __('marketplace.product_views') }}
                     </div>
                     <div class="label-md" style="color:var(--color-on-surface-variant);">
-                        Tipe: <span style="color:var(--color-primary); font-weight:600;">{{ ucfirst($product->type) }}</span>
+                        {{ __('marketplace.product_type') }} <span style="color:var(--color-primary); font-weight:600;">{{ ucfirst($product->type) }}</span>
                     </div>
                 </div>
 
@@ -104,15 +104,15 @@
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit" class="btn btn-primary btn-lg btn-pill" style="width:100%;">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                            Beli Sekarang
+                            {{ __('marketplace.product_buy') }}
                         </button>
                     </form>
                     @if($product->demo_url)
-                        <a href="{{ $product->demo_url }}" target="_blank" class="btn btn-secondary btn-lg btn-pill">Demo</a>
+                        <a href="{{ $product->demo_url }}" target="_blank" class="btn btn-secondary btn-lg btn-pill">{{ __('marketplace.product_demo') }}</a>
                     @endif
                     <a href="{{ route('chat.start', $product) }}" class="btn btn-secondary btn-lg btn-pill">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                        Tanya
+                        {{ __('marketplace.product_ask') }}
                     </a>
                 </div>
 
@@ -129,7 +129,7 @@
 
         {{-- Description --}}
         <div style="margin-top:var(--space-8); max-width:800px;">
-            <h2 class="headline-sm" style="margin-bottom:var(--space-3);">Deskripsi</h2>
+            <h2 class="headline-sm" style="margin-bottom:var(--space-3);">{{ __('marketplace.product_description') }}</h2>
             <div class="body-md" style="color:var(--color-on-surface-variant); line-height:1.8;">
                 {!! $product->description !!}
             </div>
@@ -138,7 +138,7 @@
         {{-- Reviews Section --}}
         <div style="margin-top:var(--space-8); max-width:800px;" id="reviews">
             <h2 class="headline-sm" style="margin-bottom:var(--space-4);">
-                Ulasan ({{ $product->review_count }})
+                {{ __('marketplace.product_reviews_heading') }} ({{ $product->review_count }})
             </h2>
 
             @auth
@@ -156,7 +156,7 @@
                 @if($hasPurchased)
                     <div style="background:var(--color-surface-container); border:1px solid var(--color-outline-variant); border-radius:var(--radius-lg); padding:var(--space-4); margin-bottom:var(--space-4);" id="review-form">
                         <h3 style="font-family:var(--font-headline); font-size:1rem; font-weight:600; margin-bottom:var(--space-3);">
-                            {{ $userReview ? 'Edit Ulasan Anda' : 'Tulis Ulasan' }}
+                            {{ $userReview ? __('marketplace.product_edit_review') : __('marketplace.product_write_review') }}
                         </h3>
 
                         @if(session('success'))
@@ -168,33 +168,37 @@
                             <div class="rating-group" style="margin-bottom:12px;">
                                 @for($i = 5; $i >= 1; $i--)
                                     <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" class="star-input" {{ $userReview && $userReview->rating == $i ? 'checked' : '' }}>
-                                    <label for="star{{ $i }}" class="star-label" title="{{ $i }} bintang">&#9733;</label>
+                                    <label for="star{{ $i }}" class="star-label" title="{{ $i }} {{ __('marketplace.product_review_stars') }}">&#9733;</label>
                                 @endfor
                             </div>
                             @error('rating')
                                 <span style="color:var(--color-error); font-size:0.75rem; display:block; margin-bottom:8px;">{{ $message }}</span>
                             @enderror
 
-                            <textarea name="review" rows="3" class="input-field" placeholder="Bagikan pengalaman Anda dengan produk ini..." style="margin-bottom:12px;">{{ $userReview->review ?? '' }}</textarea>
+                            <textarea name="review" rows="3" class="input-field" placeholder="{{ __('marketplace.product_review_placeholder') }}" style="margin-bottom:12px;">{{ $userReview->review ?? '' }}</textarea>
                             @error('review')
                                 <span style="color:var(--color-error); font-size:0.75rem; display:block; margin-bottom:8px;">{{ $message }}</span>
                             @enderror
 
-                            <button type="submit" class="btn btn-primary" style="padding: 10px 24px; font-size:0.85rem;">{{ $userReview ? 'Perbarui Ulasan' : 'Kirim Ulasan' }}</button>
+                            <button type="submit" class="btn btn-primary" style="padding: 10px 24px; font-size:0.85rem;">{{ $userReview ? __('marketplace.product_review_update') : __('marketplace.product_review_submit') }}</button>
                         </form>
                     </div>
                 @else
-                    <p style="font-size:0.875rem; color:var(--color-on-surface-variant); margin-bottom:var(--space-4);">Beli produk ini terlebih dahulu untuk memberikan ulasan.</p>
+                    <p style="font-size:0.875rem; color:var(--color-on-surface-variant); margin-bottom:var(--space-4);">{{ __('marketplace.product_review_buy_first') }}</p>
                 @endif
             @else
-                <p style="font-size:0.875rem; color:var(--color-on-surface-variant); margin-bottom:var(--space-4);">
-                    <a href="{{ route('login') }}" style="color:var(--color-primary);">Masuk</a> untuk memberikan ulasan.
-                </p>
+<p style="font-size:0.875rem; color:var(--color-on-surface-variant); margin-bottom:var(--space-4);">
+    {!! str_replace(
+        __('marketplace.product_review_login'),
+        '<a href="'.route('login').'" style="color:var(--color-primary);">'.__('marketplace.product_review_login').'</a>',
+        __('marketplace.product_review_login_prompt')
+    ) !!}
+</p>
             @endauth
 
             {{-- Reviews List --}}
             @php
-                $reviews = $product->reviews()->with('user')->latest()->get();
+                $reviews = $product->reviews()->with('user')->approved()->latest()->get();
             @endphp
 
             @forelse($reviews as $review)
@@ -220,17 +224,29 @@
                     @endif
                 </div>
             @empty
-                <p style="font-size:0.875rem; color:var(--color-on-surface-variant); text-align:center; padding:var(--space-4);">Belum ada ulasan untuk produk ini.</p>
+                <p style="font-size:0.875rem; color:var(--color-on-surface-variant); text-align:center; padding:var(--space-4);">{{ __('marketplace.product_reviews_empty') }}</p>
             @endforelse
         </div>
 
         {{-- Related Products --}}
         @if($relatedProducts->count())
             <div style="margin-top:var(--space-10);">
-                <h2 class="headline-sm" style="margin-bottom:var(--space-4);">Produk Terkait</h2>
+                <h2 class="headline-sm" style="margin-bottom:var(--space-4);">{{ __('marketplace.product_related') }}</h2>
                 <div class="grid-products">
                     @foreach($relatedProducts as $related)
                         @include('components.product-card', ['product' => $related])
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        {{-- Recently Viewed --}}
+        @if(count($recentlyViewed) > 0)
+            <div style="margin-top:var(--space-10);">
+                <h2 class="headline-sm" style="margin-bottom:var(--space-4);">{{ __('marketplace.product_recently_viewed') }}</h2>
+                <div class="grid-products">
+                    @foreach($recentlyViewed as $rv)
+                        @include('components.product-card', ['product' => $rv])
                     @endforeach
                 </div>
             </div>

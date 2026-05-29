@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', $conversation->subject ?? 'Percakapan - PublikDigital')
+@section('title', $conversation->subject ?? __('marketplace.chat_title'))
 
 @push('styles')
 <style>
@@ -150,7 +150,7 @@
     <div class="container">
         <div style="margin-bottom:var(--space-2);">
             <a href="{{ route('chat.index') }}" style="color:var(--color-primary); text-decoration:none; font-size:0.875rem;">
-                &larr; Kembali
+                &larr; {{ __('marketplace.chat_back') }}
             </a>
         </div>
 
@@ -160,7 +160,7 @@
                 <div style="font-weight:600;">{{ $conversation->buyer->name }}</div>
                 @if($conversation->product)
                     <div style="font-size:0.8rem; color:var(--color-on-surface-variant);">
-                        Produk: {{ $conversation->product->name }}
+                        {{ __('marketplace.chat_product_label') }} {{ $conversation->product->name }}
                     </div>
                 @endif
             </div>
@@ -177,13 +177,13 @@
                     @endphp
                     @if($msgDate !== $lastDate)
                         <div class="chat-date-separator">
-                            {{ $msg->created_at->isToday() ? 'Hari Ini' : ($msg->created_at->isYesterday() ? 'Kemarin' : $msg->created_at->translatedFormat('d F Y')) }}
+                            {{ $msg->created_at->isToday() ? __('marketplace.chat_today') : ($msg->created_at->isYesterday() ? __('marketplace.chat_yesterday') : $msg->created_at->translatedFormat('d F Y')) }}
                         </div>
                         @php $lastDate = $msgDate; @endphp
                     @endif
                     <div class="chat-bubble {{ $msg->is_mine ? 'chat-bubble--mine' : 'chat-bubble--theirs' }}">
                         @if($msg->image)
-                            <img src="{{ asset('storage/' . $msg->image) }}" alt="Gambar" class="chat-bubble-image" loading="lazy">
+                            <img src="{{ asset('storage/' . $msg->image) }}" alt="{{ __('marketplace.chat_image') }}" class="chat-bubble-image" loading="lazy">
                         @endif
                         @if($msg->body)
                             <div>{{ nl2br(e($msg->body)) }}</div>
@@ -192,7 +192,7 @@
                     </div>
                 @empty
                     <div style="text-align:center; padding:var(--space-6); color:var(--color-on-surface-variant);">
-                        Belum ada pesan. Kirim pesan pertama!
+                        {{ __('marketplace.chat_first_message') }}
                     </div>
                 @endforelse
             </div>
@@ -200,7 +200,7 @@
             <div class="chat-input-container">
                 <form method="POST" action="{{ route('chat.send', $conversation) }}" enctype="multipart/form-data" class="chat-input-form" id="chatForm">
                     @csrf
-                    <label class="chat-file-label" title="Lampirkan gambar">
+                    <label class="chat-file-label" title="{{ __('marketplace.chat_attach_image') }}">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                             <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -210,10 +210,10 @@
                     </label>
                     <div class="chat-image-preview" id="imagePreview">
                         <img src="" alt="Preview">
-                        <button type="button" id="removeImage" style="background:none; border:none; color:var(--color-error); cursor:pointer; font-size:0.75rem;">Hapus</button>
+                        <button type="button" id="removeImage" style="background:none; border:none; color:var(--color-error); cursor:pointer; font-size:0.75rem;">{{ __('marketplace.chat_remove_image') }}</button>
                     </div>
-                    <textarea name="body" class="input-field chat-input-field" rows="1" placeholder="Tulis pesan..." id="chatInput" style="padding:10px 16px;"></textarea>
-                    <button type="submit" class="chat-send-btn" title="Kirim">
+                    <textarea name="body" class="input-field chat-input-field" rows="1" placeholder="{{ __('marketplace.chat_input_placeholder') }}" id="chatInput" style="padding:10px 16px;"></textarea>
+                    <button type="submit" class="chat-send-btn" title="{{ __('marketplace.chat_send') }}">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="22" y1="2" x2="11" y2="13"/>
                             <polygon points="22 2 15 22 11 13 2 9 22 2"/>

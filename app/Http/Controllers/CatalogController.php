@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RecentlyViewed;
 use App\Models\Bundle;
 use App\Models\Product;
 use App\Models\Category;
@@ -64,6 +65,8 @@ class CatalogController extends Controller
 
         $product->increment('view_count');
 
+        RecentlyViewed::add($product->id);
+
         $relatedProducts = Product::with('category')
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
@@ -75,6 +78,8 @@ class CatalogController extends Controller
 
         $ogImage = $product->getThumbnailUrl();
 
-        return view('catalog.show', compact('product', 'relatedProducts', 'wishlistIds', 'ogImage'));
+        $recentlyViewed = \App\Helpers\RecentlyViewed::get();
+
+        return view('catalog.show', compact('product', 'relatedProducts', 'wishlistIds', 'ogImage', 'recentlyViewed'));
     }
 }

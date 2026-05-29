@@ -89,7 +89,7 @@ class ChatController extends Controller
         ]);
 
         if (!$request->filled('body') && !$request->hasFile('image')) {
-            return back()->withErrors(['message' => 'Pesan atau gambar harus diisi.']);
+            return back()->withErrors(['message' => __('marketplace.chat_required')]);
         }
 
         $imagePath = null;

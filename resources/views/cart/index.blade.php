@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Keranjang Belanja')
+@section('title', __('marketplace.cart_title'))
 
 @push('styles')
 <style>
@@ -95,9 +95,9 @@
 @section('content')
 <div class="container" style="padding-top: 120px; padding-bottom: var(--space-8); min-height: 85vh;">
     <div style="margin-bottom: var(--space-4);">
-        <span class="label-sm" style="color: var(--color-primary);">Belanja</span>
-        <h1 class="headline-md" style="margin-top: 4px;">Keranjang Belanja</h1>
-        <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">{{ $cartItems->count() }} item dalam keranjang Anda</p>
+        <span class="label-sm" style="color: var(--color-primary);">{{ __('marketplace.cart_badge') }}</span>
+        <h1 class="headline-md" style="margin-top: 4px;">{{ __('marketplace.cart_title') }}</h1>
+        <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">{{ __('marketplace.cart_item_count', ['count' => $cartItems->count()]) }}</p>
     </div>
 
     @if (session('success'))
@@ -119,9 +119,9 @@
                 <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
-            <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;">Keranjang belanja kosong</h3>
-            <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: 20px;">Belum ada produk yang ditambahkan ke keranjang.</p>
-            <a href="{{ route('catalog.index') }}" class="btn btn-primary btn-pill" style="padding: 10px 24px;">Jelajahi Katalog</a>
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;">{{ __('marketplace.cart_empty_heading') }}</h3>
+            <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: 20px;">{{ __('marketplace.cart_empty_text') }}</p>
+            <a href="{{ route('catalog.index') }}" class="btn btn-primary btn-pill" style="padding: 10px 24px;">{{ __('marketplace.cart_empty_cta') }}</a>
         </div>
     @else
         <div style="display: grid; grid-template-columns: 1fr 360px; gap: var(--space-5); align-items: start;">
@@ -137,7 +137,7 @@
                         @endif
                         <div class="cart-item-body">
                             <a href="{{ route('catalog.show', $item->product->slug) }}" class="cart-item-title" style="text-decoration:none;">{{ $item->product->name }}</a>
-                            <div class="cart-item-category" style="margin-bottom:6px;">{{ $item->product->category->name ?? 'Uncategorized' }}</div>
+                            <div class="cart-item-category" style="margin-bottom:6px;">{{ $item->product->category->name ?? __('marketplace.product_uncategorized') }}</div>
                             <div class="cart-item-price">Rp {{ number_format($item->product->effective_price, 0, ',', '.') }}</div>
                         </div>
                         <form action="{{ route('cart.update', $item) }}" method="POST" style="display:flex; align-items:center; gap:8px;">
@@ -149,7 +149,7 @@
                         </div>
                         <form action="{{ route('cart.remove', $item) }}" method="POST" style="margin:0;">
                             @csrf
-                            <button type="submit" style="background:none; border:none; cursor:pointer; color:var(--color-error); padding:4px;" title="Hapus">
+                            <button type="submit" style="background:none; border:none; cursor:pointer; color:var(--color-error); padding:4px;" title="{{ __('marketplace.cart_remove') }}">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                             </button>
                         </form>
@@ -158,14 +158,14 @@
             </div>
 
             <div class="cart-summary">
-                <h3 style="font-family:var(--font-headline); font-size:1.25rem; font-weight:600; margin-bottom:var(--space-3);">Ringkasan Belanja</h3>
+                <h3 style="font-family:var(--font-headline); font-size:1.25rem; font-weight:600; margin-bottom:var(--space-3);">{{ __('marketplace.cart_summary') }}</h3>
                 @php
                     $subtotal = $cartItems->sum(fn ($i) => $i->product->effective_price * $i->quantity);
                     $appliedCoupon = session('applied_coupon') ? \App\Models\Coupon::find(session('applied_coupon')) : null;
                     $discount = $appliedCoupon ? $appliedCoupon->calculateDiscount($subtotal) : 0;
                 @endphp
                 <div class="cart-summary-row">
-                    <span>Subtotal ({{ $cartItems->sum('quantity') }} item)</span>
+                    <span>{{ __('marketplace.cart_subtotal', ['count' => $cartItems->sum('quantity')]) }}</span>
                     <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                 </div>
 
@@ -174,46 +174,46 @@
                     @if($appliedCoupon)
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                             <div>
-                                <span style="font-size:0.8rem; font-weight:600; color:var(--color-success);">Kupon: {{ $appliedCoupon->code }}</span>
+                                <span style="font-size:0.8rem; font-weight:600; color:var(--color-success);">{{ __('marketplace.cart_coupon') }} {{ $appliedCoupon->code }}</span>
                                 <span style="font-size:0.75rem; color:var(--color-on-surface-variant); display:block;">{{ $appliedCoupon->name }}</span>
                             </div>
                             <form action="{{ route('cart.coupon.remove') }}" method="POST" style="margin:0;">
                                 @csrf
-                                <button type="submit" style="background:none; border:none; cursor:pointer; color:var(--color-error); font-size:0.75rem;">Hapus</button>
+                                <button type="submit" style="background:none; border:none; cursor:pointer; color:var(--color-error); font-size:0.75rem;">{{ __('marketplace.cart_remove_coupon') }}</button>
                             </form>
                         </div>
                     @else
                         <form action="{{ route('cart.coupon.apply') }}" method="POST" style="display:flex; gap:8px;">
                             @csrf
-                            <input type="text" name="code" placeholder="Masukkan kode kupon" style="flex:1; padding:8px 12px; background:var(--color-surface-container-high); border:1px solid var(--color-outline-variant); border-radius:var(--radius-md); color:var(--color-on-surface); font-size:0.8rem;">
-                            <button type="submit" class="btn btn-primary" style="padding:8px 12px; font-size:0.75rem;">Pakai</button>
+                            <input type="text" name="code" placeholder="{{ __('marketplace.cart_coupon_placeholder') }}" style="flex:1; padding:8px 12px; background:var(--color-surface-container-high); border:1px solid var(--color-outline-variant); border-radius:var(--radius-md); color:var(--color-on-surface); font-size:0.8rem;">
+                            <button type="submit" class="btn btn-primary" style="padding:8px 12px; font-size:0.75rem;">{{ __('marketplace.cart_apply_coupon') }}</button>
                         </form>
                     @endif
                 </div>
 
                 <div class="cart-summary-row">
-                    <span>Pajak</span>
+                    <span>{{ __('marketplace.cart_tax') }}</span>
                     <span>Rp 0</span>
                 </div>
                 @if($discount > 0)
                     <div class="cart-summary-row" style="color: var(--color-success);">
-                        <span>Diskon Kupon</span>
+                        <span>{{ __('marketplace.cart_discount') }}</span>
                         <span>- Rp {{ number_format($discount, 0, ',', '.') }}</span>
                     </div>
                 @endif
                 <div class="cart-summary-row total">
-                    <span>Total</span>
+                    <span>{{ __('marketplace.cart_total') }}</span>
                     <span>Rp {{ number_format(max($subtotal - $discount, 0), 0, ',', '.') }}</span>
                 </div>
                 <form action="{{ route('cart.checkout') }}" method="POST" style="margin-top:var(--space-3);">
                     @csrf
                     <button type="submit" class="btn btn-primary" style="width:100%; padding:14px;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-                        Checkout Sekarang
+                        {{ __('marketplace.cart_checkout') }}
                     </button>
                 </form>
                 <div style="text-align:center; margin-top:12px;">
-                    <a href="{{ route('catalog.index') }}" style="color:var(--color-on-surface-variant); font-size:0.8rem;">Lanjut Belanja</a>
+                    <a href="{{ route('catalog.index') }}" style="color:var(--color-on-surface-variant); font-size:0.8rem;">{{ __('marketplace.cart_continue') }}</a>
                 </div>
             </div>
         </div>

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    use LogsActivity;
     protected $fillable = [
         'order_number',
         'user_id',
@@ -71,5 +73,10 @@ class Order extends Model
     public function getDiscountedSubtotalAttribute(): float
     {
         return (float) $this->subtotal - (float) $this->discount;
+    }
+
+    public function getNameForLog(): string
+    {
+        return $this->order_number;
     }
 }

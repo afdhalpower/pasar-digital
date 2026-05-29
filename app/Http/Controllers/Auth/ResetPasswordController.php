@@ -41,7 +41,7 @@ class ResetPasswordController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login.')
-            : back()->with('error', 'Token reset password tidak valid atau sudah kadaluwarsa.');
+            ? redirect()->route('login')->with('success', __('auth.reset_success'))
+            : back()->with('error', __('auth.reset_invalid'));
     }
 }

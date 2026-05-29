@@ -1,15 +1,15 @@
 @extends('layouts.marketplace')
 
-@section('title', 'FAQ')
+@section('title', __('marketplace.faq_title'))
 @section('meta_description', 'Pertanyaan yang sering diajukan seputar PublikDigital.')
 
 @section('content')
 <section class="section" style="padding-top:120px;">
     <div class="container" style="max-width:720px;">
         <div style="text-align:center; margin-bottom:var(--space-6);">
-            <span class="hero-badge">FAQ</span>
-            <h1 class="headline-sm" style="margin-top:var(--space-2);">Pertanyaan Umum</h1>
-            <p class="hero-subtitle" style="margin:var(--space-2) auto 0;">Temukan jawaban untuk pertanyaan yang paling sering diajukan.</p>
+            <span class="hero-badge">{{ __('marketplace.faq_badge') }}</span>
+            <h1 class="headline-sm" style="margin-top:var(--space-2);">{{ __('marketplace.faq_heading') }}</h1>
+            <p class="hero-subtitle" style="margin:var(--space-2) auto 0;">{{ __('marketplace.faq_subtitle') }}</p>
         </div>
 
         @php

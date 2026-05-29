@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Syarat & Ketentuan')
+@section('title', __('marketplace.terms_title'))
 
 @section('meta_description', 'Syarat dan ketentuan penggunaan platform PublikDigital - Marketplace produk digital premium untuk kreator Indonesia.')
 
@@ -8,9 +8,9 @@
 <section class="section-lg" style="padding-top: 120px;">
     <div class="container" style="max-width: 800px;">
         <div class="animate-in">
-            <span class="label-sm" style="color: var(--color-primary);">Legal</span>
-            <h1 class="headline-md" style="margin-top: 8px; margin-bottom: var(--space-2);">Syarat & Ketentuan</h1>
-            <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: var(--space-5);">Terakhir diperbarui: {{ date('d F Y') }}</p>
+            <span class="label-sm" style="color: var(--color-primary);">{{ __('marketplace.terms_badge') }}</span>
+            <h1 class="headline-md" style="margin-top: 8px; margin-bottom: var(--space-2);">{{ __('marketplace.terms_heading') }}</h1>
+            <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: var(--space-5);">{{ __('marketplace.terms_updated', ['date' => date('d F Y')]) }}</p>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: var(--space-4);">
@@ -61,7 +61,7 @@
 
             <div class="animate-in animate-delay-3">
                 <h2 class="headline-sm" style="font-size: 1.25rem; margin-bottom: var(--space-2);">9. Kontak</h2>
-                <p style="color: var(--color-on-surface-variant); line-height: 1.8;">Jika Anda memiliki pertanyaan mengenai syarat dan ketentuan ini, silakan hubungi kami melalui halaman <a href="{{ route('contact') }}" style="color: var(--color-primary);">Kontak</a>.</p>
+                <p style="color: var(--color-on-surface-variant); line-height: 1.8;">Jika Anda memiliki pertanyaan mengenai syarat dan ketentuan ini, silakan hubungi kami melalui halaman <a href="{{ route('contact') }}" style="color: var(--color-primary);">{{ __('marketplace.contact_title') }}</a>.</p>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice #{{ $order->order_number }}</title>
+    <title>{{ __('marketplace.invoice_title') }} #{{ $order->order_number }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -118,27 +118,27 @@
 <body>
     <div class="invoice-header">
         <div>
-            <div class="invoice-brand">PublikDigital</div>
-            <p style="color: #666; font-size: 0.8rem; margin-top: 4px;">Marketplace Produk Digital Premium</p>
+            <div class="invoice-brand">{{ __('marketplace.brand') }}</div>
+            <p style="color: #666; font-size: 0.8rem; margin-top: 4px;">{{ __('marketplace.invoice_brand_subtitle') }}</p>
         </div>
         <div class="invoice-title">
-            <h1>INVOICE</h1>
+            <h1>{{ __('marketplace.invoice_title') }}</h1>
             <p>#{{ $order->order_number }}</p>
         </div>
     </div>
 
     <div class="invoice-body">
         <div class="invoice-section">
-            <h3>Diterbitkan Untuk</h3>
+            <h3>{{ __('marketplace.invoice_for') }}</h3>
             <p style="font-weight: 600;">{{ $order->user->name }}</p>
             <p>{{ $order->user->email }}</p>
         </div>
         <div class="invoice-section" style="text-align: right;">
-            <h3>Detail Invoice</h3>
-            <p>Tanggal: {{ $order->created_at->format('d M Y, H:i') }}</p>
-            <p>Status: 
+            <h3>{{ __('marketplace.invoice_detail') }}</h3>
+            <p>{{ __('marketplace.invoice_date') }} {{ $order->created_at->format('d M Y, H:i') }}</p>
+            <p>{{ __('marketplace.invoice_status') }} 
                 @if($order->payment_status === 'paid')
-                    <span style="color: #10B981; font-weight: 600;">LUNAS</span>
+                    <span style="color: #10B981; font-weight: 600;">{{ __('marketplace.invoice_paid') }}</span>
                 @else
                     <span style="color: #F59E0B; font-weight: 600;">{{ strtoupper($order->payment_status) }}</span>
                 @endif
@@ -149,16 +149,16 @@
     <table class="invoice-table">
         <thead>
             <tr>
-                <th style="width: 60%;">Produk</th>
-                <th>Harga</th>
-                <th>Qty</th>
-                <th>Subtotal</th>
+                <th style="width: 60%;">{{ __('marketplace.invoice_product') }}</th>
+                <th>{{ __('marketplace.invoice_price') }}</th>
+                <th>{{ __('marketplace.invoice_qty') }}</th>
+                <th>{{ __('marketplace.invoice_subtotal') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach($order->items as $item)
                 <tr>
-                    <td>{{ $item->product?->name ?? 'Produk Dihapus' }}</td>
+                    <td>{{ $item->product?->name ?? __('marketplace.product_deleted') }}</td>
                     <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                     <td>{{ $item->quantity }}</td>
                     <td>Rp {{ number_format($item->total, 0, ',', '.') }}</td>
@@ -169,34 +169,34 @@
 
     <div class="invoice-summary">
         <div class="invoice-summary-row">
-            <span>Subtotal</span>
+            <span>{{ __('marketplace.invoice_subtotal') }}</span>
             <span>Rp {{ number_format($order->subtotal, 0, ',', '.') }}</span>
         </div>
         @if($order->discount > 0)
             <div class="invoice-summary-row" style="color: #10B981;">
-                <span>Diskon</span>
+                <span>{{ __('marketplace.invoice_discount') }}</span>
                 <span>- Rp {{ number_format($order->discount, 0, ',', '.') }}</span>
             </div>
         @endif
         <div class="invoice-summary-row">
-            <span>Kode Unik</span>
+            <span>{{ __('marketplace.invoice_unique_code') }}</span>
             <span>+ Rp {{ number_format($order->unique_code, 0, ',', '.') }}</span>
         </div>
         <div class="invoice-summary-row total">
-            <span>Total Transfer</span>
+            <span>{{ __('marketplace.invoice_total_transfer') }}</span>
             <span>Rp {{ number_format($order->total_transfer, 0, ',', '.') }}</span>
         </div>
     </div>
 
     <div style="text-align: center; margin-top: 24px;" class="no-print">
         <button onclick="window.print()" style="padding: 12px 32px; background: #0d9488; color: #fff; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer;">
-            Cetak Invoice
+            {{ __('marketplace.invoice_print') }}
         </button>
     </div>
 
     <div class="invoice-footer">
-        <p>PublikDigital — Marketplace Produk Digital Premium untuk Kreator Indonesia</p>
-        <p style="margin-top: 4px;">Terima kasih telah berbelanja di PublikDigital!</p>
+        <p>{{ __('marketplace.invoice_footer') }}</p>
+        <p style="margin-top: 4px;">{{ __('marketplace.invoice_thanks') }}</p>
     </div>
 </body>
 </html>

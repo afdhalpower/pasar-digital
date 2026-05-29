@@ -15,22 +15,22 @@ class BankAccountsTable
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('bank_name')
+                TextColumn::make('bank_name')
                     ->label('Bank')
                     ->searchable()
                     ->weight('bold'),
-                Tables\Columns\TextColumn::make('account_number')
+                TextColumn::make('account_number')
                     ->label('No. Rekening')
                     ->searchable()
                     ->copyable()
                     ->copyMessage('No. rekening disalin'),
-                Tables\Columns\TextColumn::make('account_holder')
+                TextColumn::make('account_holder')
                     ->label('Atas Nama')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->label('Aktif')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('sort_order')
+                TextColumn::make('sort_order')
                     ->label('Urutan')
                     ->numeric()
                     ->sortable(),

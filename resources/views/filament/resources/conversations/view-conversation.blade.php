@@ -12,7 +12,7 @@
             <div class="font-semibold text-gray-900 dark:text-gray-100">{{ $record->buyer->name }}</div>
             @if($record->product)
                 <div class="text-sm text-gray-500 dark:text-gray-400">
-                    Produk: {{ $record->product->name }}
+                    {{ __('marketplace.chat_product_label') }} {{ $record->product->name }}
                 </div>
             @endif
         </div>
@@ -28,7 +28,7 @@
             <div class="flex {{ $isMine ? 'justify-end' : 'justify-start' }}">
                 <div class="max-w-[75%] rounded-xl px-4 py-2 {{ $isMine ? 'bg-teal-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100' }}">
                     @if($msg->image)
-                        <img src="{{ asset('storage/' . $msg->image) }}" alt="Gambar" class="rounded-lg max-h-48 mb-1">
+                        <img src="{{ asset('storage/' . $msg->image) }}" alt="{{ __('marketplace.chat_image') }}" class="rounded-lg max-h-48 mb-1">
                     @endif
                     @if($msg->body)
                         <div class="text-sm whitespace-pre-wrap">{{ $msg->body }}</div>
@@ -43,7 +43,7 @@
             </div>
         @empty
             <div class="text-center py-8 text-gray-400 dark:text-gray-500">
-                Belum ada pesan dalam percakapan ini.
+                {{ __('marketplace.chat_no_messages') }}
             </div>
         @endforelse
     </div>
@@ -55,7 +55,7 @@
                 <x-filament::input
                     type="text"
                     wire:model="replyBody"
-                    placeholder="Tulis balasan..."
+                    placeholder="{{ __('marketplace.chat_input_placeholder') }}"
                 />
             </x-filament::input.wrapper>
 
@@ -76,7 +76,7 @@
 
             <div class="flex justify-end gap-2">
                 <x-filament::button type="submit">
-                    Kirim
+                    {{ __('marketplace.chat_send') }}
                 </x-filament::button>
             </div>
         </form>

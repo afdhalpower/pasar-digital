@@ -241,8 +241,10 @@ php artisan serve
 
 ## Changelog
 
-### 2026-05-19
+### 2026-05-29
 
+- **Features: Reviews, Contacts, Activity Logs** — Fitur review & rating produk, kontak masuk, aktivitas log, email verification, API endpoints, bank accounts, bundles, license management, coupon management, dan berbagai fitur marketplace lainnya.
+- **Fix: Filament v5 action namespace** — Semua resource (`ReviewResource`, `ContactResource`, `ActivityLogResource`) diperbaiki dari namespace `Filament\Tables\Actions\*` menjadi `Filament\Actions\*` sesuai perubahan di Filament v5.
 - **Fix: Redirect login pembeli** — Pembeli yang sebelumnya mengakses `/admin` saat logout tidak lagi diarahkan ke halaman admin setelah login. Perbaikan di `app/Http/Controllers/Auth/LoginController.php:36`: ganti `redirect()->intended()` dengan `redirect()->route()`.
 - **Fix: Navbar mobile items bocor ke desktop** — Elemen menu khusus mobile (`nav-mobile-only`) dan tombol toggle tidak lagi tampil di viewport desktop. Perbaikan selector CSS dengan `!important` di `resources/css/design-system.css`.
 

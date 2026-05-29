@@ -53,7 +53,7 @@ class ViewConversation extends Page
         if (empty($this->replyBody) && empty($this->replyImage)) {
             Notification::make()
                 ->warning()
-                ->title('Pesan atau gambar harus diisi.')
+                ->title(__('marketplace.chat_required'))
                 ->send();
             return;
         }
@@ -72,7 +72,7 @@ class ViewConversation extends Page
 
         Notification::make()
             ->success()
-            ->title('Pesan terkirim.')
+            ->title(__('marketplace.chat_sent'))
             ->send();
     }
 

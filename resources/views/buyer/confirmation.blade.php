@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Pesanan Berhasil')
+@section('title', __('marketplace.confirmation_title'))
 
 @section('content')
 <div class="container" style="padding-top: 120px; padding-bottom: var(--space-8); min-height: 85vh;">
@@ -11,44 +11,44 @@
             </svg>
         </div>
 
-        <span class="label-sm" style="color: var(--color-success);">Pesanan Berhasil Dibuat</span>
-        <h1 class="headline-md" style="margin-top: 8px;">Terima Kasih, {{ auth()->user()->name }}!</h1>
+        <span class="label-sm" style="color: var(--color-success);">{{ __('marketplace.confirmation_badge') }}</span>
+        <h1 class="headline-md" style="margin-top: 8px;">{{ __('marketplace.confirmation_heading', ['name' => auth()->user()->name]) }}</h1>
         <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-top: 8px; max-width: 400px; margin-left: auto; margin-right: auto;">
-            Pesanan Anda telah tercatat. Silakan lakukan pembayaran sesuai instruksi di bawah untuk memproses pesanan.
+            {{ __('marketplace.confirmation_text') }}
         </p>
 
         <div style="background: var(--color-surface-container); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: var(--space-5); text-align: left;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3);">
-                <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600;">Detail Pesanan</h3>
-                <span class="badge badge-warning">Menunggu Pembayaran</span>
+                <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600;">{{ __('marketplace.confirmation_detail') }}</h3>
+                <span class="badge badge-warning">{{ __('marketplace.confirmation_pending_badge') }}</span>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.875rem;">
                 <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
-                    <span>No. Pesanan</span>
+                    <span>{{ __('marketplace.confirmation_order_number') }}</span>
                     <span style="font-weight: 600; color: var(--color-on-surface);">{{ $order->order_number }}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
-                    <span>Tanggal</span>
+                    <span>{{ __('marketplace.confirmation_date') }}</span>
                     <span style="color: var(--color-on-surface);">{{ $order->created_at->format('d M Y, H:i') }}</span>
                 </div>
                 <div style="border-top: 1px solid var(--color-outline-variant); margin: 8px 0;"></div>
 
                 @foreach($order->items as $item)
                 <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
-                    <span>{{ $item->product?->name ?? 'Produk Dihapus' }} <span style="font-size:0.8rem;">x{{ $item->quantity }}</span></span>
+                    <span>{{ $item->product?->name ?? __('marketplace.product_deleted') }} <span style="font-size:0.8rem;">x{{ $item->quantity }}</span></span>
                     <span style="color: var(--color-on-surface);">Rp {{ number_format($item->total, 0, ',', '.') }}</span>
                 </div>
                 @endforeach
 
                 <div style="border-top: 1px solid var(--color-outline-variant); margin: 8px 0;"></div>
                 <div style="display: flex; justify-content: space-between; color: var(--color-on-surface-variant);">
-                    <span>Kode Unik</span>
+                    <span>{{ __('marketplace.confirmation_unique_code') }}</span>
                     <span style="color: var(--color-warning); font-weight: 700;">+ Rp {{ number_format($order->unique_code, 0, ',', '.') }}</span>
                 </div>
                 <div style="border-top: 1px solid var(--color-outline-variant); margin: 8px 0;"></div>
                 <div style="display: flex; justify-content: space-between; font-weight: 700;">
-                    <span style="color: var(--color-on-surface);">Total Transfer</span>
+                    <span style="color: var(--color-on-surface);">{{ __('marketplace.confirmation_total_transfer') }}</span>
                     <span style="color: var(--color-primary); font-size: 1.125rem;">Rp {{ number_format($order->total_transfer, 0, ',', '.') }}</span>
                 </div>
             </div>
@@ -57,10 +57,10 @@
             <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: var(--space-3); text-align: left;">
                 <h4 style="font-size: 0.875rem; font-weight: 600; color: var(--color-warning); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    Instruksi Pembayaran
+                    {{ __('marketplace.confirmation_payment_instructions') }}
                 </h4>
                 <p style="font-size: 0.8rem; color: var(--color-on-surface-variant); line-height: 1.6;">
-                    Silakan transfer <strong style="color: var(--color-on-surface);">tepat Rp {{ number_format($order->total_transfer, 0, ',', '.') }}</strong> (termasuk kode unik <strong style="color: var(--color-warning);">{{ $order->unique_code }}</strong>) ke salah satu rekening berikut:
+                    {{ __('marketplace.confirmation_transfer_instruction', ['total' => 'Rp ' . number_format($order->total_transfer, 0, ',', '.'), 'code' => $order->unique_code]) }}
                 </p>
                 @forelse($bankAccounts as $bank)
                     <div style="background: var(--color-surface-container-high); border-radius: var(--radius-md); padding: 12px; margin-top: 10px; {{ !$loop->last ? 'margin-bottom: 8px;' : '' }}">
@@ -68,27 +68,27 @@
                             <p style="font-size: 0.8rem; font-weight: 600; color: var(--color-on-surface);">{{ $bank->bank_name }}</p>
                             <button onclick="navigator.clipboard.writeText('{{ $bank->account_number }}')" style="background:none; border:none; cursor:pointer; color:var(--color-primary); font-size:0.75rem; display:flex; align-items:center; gap:4px;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                                Salin
+                                {{ __('marketplace.confirmation_copy') }}
                             </button>
                         </div>
                         <p style="font-size: 1rem; font-weight: 700; color: var(--color-on-surface); letter-spacing: 0.05em; font-family: monospace; margin-top: 4px;">{{ $bank->account_number }}</p>
-                        <p style="font-size: 0.8rem; color: var(--color-on-surface-variant);">a.n. {{ $bank->account_holder }}</p>
+                        <p style="font-size: 0.8rem; color: var(--color-on-surface-variant);">{{ __('marketplace.confirmation_account_name') }} {{ $bank->account_holder }}</p>
                     </div>
                 @empty
-                    <p style="font-size: 0.8rem; color: var(--color-error);">Belum ada informasi rekening. Hubungi admin.</p>
+                    <p style="font-size: 0.8rem; color: var(--color-error);">{{ __('marketplace.confirmation_no_accounts') }}</p>
                 @endforelse
                 <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 10px;">
-                    Transfer harus <strong>tepat</strong> termasuk kode unik agar admin dapat memverifikasi pesanan dengan mudah. Konfirmasi pembayaran melalui <strong>Admin Panel</strong> setelah transfer.
+                    {{ __('marketplace.confirmation_note') }}
                 </p>
             </div>
 
         <div style="display: flex; gap: 12px; justify-content: center; margin-top: var(--space-5); flex-wrap: wrap;">
             <a href="{{ route('buyer.orders') }}" class="btn btn-primary btn-pill" style="padding: 12px 28px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-                Lihat Pesanan Saya
+                {{ __('marketplace.confirmation_view_order') }}
             </a>
-            <a href="{{ route('buyer.order.invoice', $order) }}" target="_blank" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">Lihat Invoice</a>
-            <a href="{{ route('catalog.index') }}" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">Lanjut Belanja</a>
+            <a href="{{ route('buyer.order.invoice', $order) }}" target="_blank" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">{{ __('marketplace.confirmation_view_invoice') }}</a>
+            <a href="{{ route('catalog.index') }}" class="btn btn-secondary btn-pill" style="padding: 12px 28px;">{{ __('marketplace.confirmation_continue') }}</a>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Blog')
+@section('title', __('marketplace.blog_title'))
 @section('meta_description', 'Artikel, tutorial, dan berita terbaru seputar produk digital dan kreativitas.')
 
 @section('content')
@@ -8,9 +8,9 @@
     <div class="container">
         <div class="section-header">
             <div>
-                <span class="hero-badge">Blog</span>
-                <h1 class="headline-sm" style="margin-top:var(--space-2);">Artikel & Tutorial</h1>
-                <p class="subtitle">Dapatkan inspirasi dan wawasan seputar dunia produk digital.</p>
+                <span class="hero-badge">{{ __('marketplace.blog_badge') }}</span>
+                <h1 class="headline-sm" style="margin-top:var(--space-2);">{{ __('marketplace.blog_heading') }}</h1>
+                <p class="subtitle">{{ __('marketplace.blog_subtitle') }}</p>
             </div>
         </div>
 
@@ -20,8 +20,8 @@
                 <path d="M2 17l10 5 10-5"/>
                 <path d="M2 12l10 5 10-5"/>
             </svg>
-            <p class="body-lg">Belum ada artikel.</p>
-            <p style="font-size:0.875rem;">Nantikan artikel menarik seputar produk digital, tutorial, dan tips kreatif.</p>
+            <p class="body-lg">{{ __('marketplace.blog_empty') }}</p>
+            <p style="font-size:0.875rem;">{{ __('marketplace.blog_empty_text') }}</p>
         </div>
     </div>
 </section>

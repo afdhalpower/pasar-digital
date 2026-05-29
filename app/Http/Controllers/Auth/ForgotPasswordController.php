@@ -20,7 +20,7 @@ class ForgotPasswordController extends Controller
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', 'Link reset password telah dikirim ke email Anda.')
-            : back()->with('error', 'Gagal mengirim link reset password. Silakan coba lagi.');
+            ? back()->with('success', __('auth.forgot_success'))
+            : back()->with('error', __('auth.forgot_error'));
     }
 }

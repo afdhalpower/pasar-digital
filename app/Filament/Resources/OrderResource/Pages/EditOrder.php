@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\License;
+use App\Traits\LogsActivity;
 use App\Notifications\OrderRefunded;
 use App\Notifications\OrderStatusChanged;
 use App\Notifications\PaymentReceived;
@@ -31,6 +32,7 @@ class EditOrder extends EditRecord
                     if ($oldPaymentStatus !== 'paid') {
                         $this->record->user->notify(new PaymentReceived($this->record));
                     }
+                    LogsActivity::log('payment_confirmed', "Pembayaran pesanan #{$this->record->order_number} dikonfirmasi lunas", $this->record);
                 }),
 
             Action::make('setCompleted')
@@ -51,6 +53,7 @@ class EditOrder extends EditRecord
                             $this->record, $oldStatus, 'completed'
                         ));
                     }
+                    LogsActivity::log('order_completed', "Pesanan #{$this->record->order_number} diselesaikan", $this->record);
 
                     $this->generateLicenses();
                 }),
@@ -70,6 +73,7 @@ class EditOrder extends EditRecord
                             $this->record, $oldStatus, 'processing'
                         ));
                     }
+                    LogsActivity::log('order_processing', "Pesanan #{$this->record->order_number} diproses", $this->record);
                 }),
 
             Action::make('setCancelled')
@@ -91,6 +95,7 @@ class EditOrder extends EditRecord
                             $this->record, $oldStatus, 'cancelled'
                         ));
                     }
+                    LogsActivity::log('order_cancelled', "Pesanan #{$this->record->order_number} dibatalkan", $this->record);
                 }),
 
             Action::make('refund')
@@ -106,6 +111,7 @@ class EditOrder extends EditRecord
                     ]);
                     $this->refreshFormData(['payment_status', 'status']);
                     $this->record->user->notify(new OrderRefunded($this->record));
+                    LogsActivity::log('order_refunded', "Pesanan #{$this->record->order_number} di-refund", $this->record);
                 }),
 
             Actions\DeleteAction::make(),

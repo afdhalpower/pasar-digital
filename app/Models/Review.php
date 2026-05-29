@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
-    protected $fillable = ['user_id', 'product_id', 'order_id', 'rating', 'review'];
+    protected $fillable = ['user_id', 'product_id', 'order_id', 'rating', 'review', 'is_approved'];
 
     protected $casts = [
         'rating' => 'integer',
+        'is_approved' => 'boolean',
     ];
 
     public function user(): BelongsTo
@@ -26,5 +27,10 @@ class Review extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('is_approved', true);
     }
 }

@@ -7,7 +7,7 @@
         </div>
     @endif
     <div class="product-card-body">
-        <div class="product-card-category">{{ $product->category->name ?? 'Uncategorized' }}</div>
+        <div class="product-card-category">{{ $product->category->name ?? __('marketplace.product_card_category') }}</div>
         <h3 class="product-card-title">{{ $product->name }}</h3>
         @if($product->short_description)
             <p class="body-md" style="color:var(--color-on-surface-variant); margin-bottom:12px; font-size:0.85rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">

@@ -32,8 +32,11 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         Auth::login($user);
 
-        return redirect()->route('buyer.dashboard');
+        return redirect()->route('verification.notice')
+            ->with('success', __('auth.register_success'));
     }
 }

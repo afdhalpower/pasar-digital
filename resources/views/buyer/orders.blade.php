@@ -1,6 +1,6 @@
 @extends('layouts.marketplace')
 
-@section('title', 'Riwayat Pesanan')
+@section('title', __('marketplace.orders_title'))
 
 @php $hasFilter = request()->anyFilled(['search', 'payment', 'status']); @endphp
 
@@ -11,30 +11,30 @@
 
         <main class="dashboard-content-area animate-in">
             <div style="margin-bottom: var(--space-4);">
-                <span class="label-sm" style="color: var(--color-primary);">Transaksi Anda</span>
-                <h1 class="headline-md" style="margin-top: 4px;">Riwayat Pesanan</h1>
-                <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">Semua riwayat transaksi pembelian produk digital Anda.</p>
+                <span class="label-sm" style="color: var(--color-primary);">{{ __('marketplace.orders_badge') }}</span>
+                <h1 class="headline-md" style="margin-top: 4px;">{{ __('marketplace.orders_title') }}</h1>
+                <p style="color: var(--color-on-surface-variant); font-size: 0.875rem;">{{ __('marketplace.orders_subtitle') }}</p>
             </div>
 
             <form method="GET" action="{{ route('buyer.orders') }}" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: var(--space-4);">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari no. pesanan..." class="input-field" style="max-width: 260px;">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('marketplace.orders_search') }}" class="input-field" style="max-width: 260px;">
                 <select name="payment" class="input-field" style="max-width: 160px;" onchange="this.form.submit()">
-                    <option value="">Semua Pembayaran</option>
-                    <option value="paid" {{ request('payment') == 'paid' ? 'selected' : '' }}>Lunas</option>
-                    <option value="unpaid" {{ request('payment') == 'unpaid' ? 'selected' : '' }}>Belum Bayar</option>
-                    <option value="failed" {{ request('payment') == 'failed' ? 'selected' : '' }}>Gagal</option>
-                    <option value="refunded" {{ request('payment') == 'refunded' ? 'selected' : '' }}>Refund</option>
+                    <option value="">{{ __('marketplace.orders_filter_all') }}</option>
+                    <option value="paid" {{ request('payment') == 'paid' ? 'selected' : '' }}>{{ __('marketplace.orders_filter_paid') }}</option>
+                    <option value="unpaid" {{ request('payment') == 'unpaid' ? 'selected' : '' }}>{{ __('marketplace.orders_filter_unpaid') }}</option>
+                    <option value="failed" {{ request('payment') == 'failed' ? 'selected' : '' }}>{{ __('marketplace.orders_filter_failed') }}</option>
+                    <option value="refunded" {{ request('payment') == 'refunded' ? 'selected' : '' }}>{{ __('marketplace.orders_filter_refund') }}</option>
                 </select>
                 <select name="status" class="input-field" style="max-width: 160px;" onchange="this.form.submit()">
-                    <option value="">Semua Status</option>
-                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Diproses</option>
-                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai</option>
-                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Batal</option>
+                    <option value="">{{ __('marketplace.orders_status_all') }}</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('marketplace.orders_status_pending') }}</option>
+                    <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>{{ __('marketplace.orders_status_processing') }}</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('marketplace.orders_status_completed') }}</option>
+                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{ __('marketplace.orders_status_cancelled') }}</option>
                 </select>
-                <button type="submit" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">Filter</button>
+                <button type="submit" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">{{ __('marketplace.orders_filter_button') }}</button>
                 @if($hasFilter)
-                    <a href="{{ route('buyer.orders') }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.8rem;">Reset</a>
+                    <a href="{{ route('buyer.orders') }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.8rem;">{{ __('marketplace.orders_reset_button') }}</a>
                 @endif
             </form>
 
@@ -43,12 +43,12 @@
                     <table class="dashboard-table">
                         <thead>
                             <tr>
-                                <th>No. Pesanan</th>
-                                <th>Tanggal</th>
-                                <th>Metode Pembayaran</th>
-                                <th>Total</th>
-                                <th>Status Pembayaran</th>
-                                <th>Status Pesanan</th>
+                                <th>{{ __('marketplace.dashboard_order_number') }}</th>
+                                <th>{{ __('marketplace.dashboard_order_date') }}</th>
+                                <th>{{ __('marketplace.dashboard_payment_method') }}</th>
+                                <th>{{ __('marketplace.dashboard_total') }}</th>
+                                <th>{{ __('marketplace.dashboard_payment_status') }}</th>
+                                <th>{{ __('marketplace.dashboard_order_status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,22 +64,22 @@
                                     <td style="font-weight: 600; color: var(--color-primary);">Rp {{ number_format($order->total, 0, ',', '.') }}</td>
                                     <td>
                                         @if ($order->payment_status === 'paid')
-                                            <span class="badge badge-success">Lunas</span>
+                                            <span class="badge badge-success">{{ __('marketplace.dashboard_paid') }}</span>
                                         @elseif ($order->payment_status === 'failed')
-                                            <span class="badge badge-danger">Gagal</span>
+                                            <span class="badge badge-danger">{{ __('marketplace.dashboard_failed') }}</span>
                                         @elseif ($order->payment_status === 'refunded')
-                                            <span class="badge badge-info">Refunded</span>
+                                            <span class="badge badge-info">{{ __('marketplace.dashboard_refunded') }}</span>
                                         @else
-                                            <span class="badge badge-warning">Belum Bayar</span>
+                                            <span class="badge badge-warning">{{ __('marketplace.dashboard_unpaid') }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if ($order->status === 'completed')
-                                            <span class="badge badge-success">Selesai</span>
+                                            <span class="badge badge-success">{{ __('marketplace.dashboard_completed') }}</span>
                                         @elseif ($order->status === 'pending')
-                                            <span class="badge badge-warning">Menunggu</span>
+                                            <span class="badge badge-warning">{{ __('marketplace.dashboard_pending') }}</span>
                                         @elseif ($order->status === 'processing')
-                                            <span class="badge badge-info">Diproses</span>
+                                            <span class="badge badge-info">{{ __('marketplace.dashboard_processing') }}</span>
                                         @else
                                             <span class="badge badge-danger">{{ ucfirst($order->status) }}</span>
                                         @endif
@@ -91,20 +91,20 @@
                                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-outline)" stroke-width="1.5" style="margin-bottom:16px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                         <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--color-on-surface); margin-bottom: 8px;">
                                             @if($hasFilter)
-                                                Tidak ada pesanan dengan filter tersebut
+                                                {{ __('marketplace.orders_empty_filter') }}
                                             @else
-                                                Belum ada pesanan
+                                                {{ __('marketplace.orders_empty_no_orders') }}
                                             @endif
                                         </h3>
                                         <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; margin-bottom: 20px;">
                                             @if($hasFilter)
-                                                Coba ubah filter atau kata kunci pencarian.
+                                                {{ __('marketplace.orders_empty_text') }}
                                             @else
-                                                Anda belum melakukan pembelian produk apapun di RepublikDigital.
+                                                {{ __('marketplace.orders_empty_no_purchases') }}
                                             @endif
                                         </p>
                                         @unless($hasFilter)
-                                            <a href="{{ route('catalog.index') }}" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.875rem;">Mulai Belanja</a>
+                                            <a href="{{ route('catalog.index') }}" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.875rem;">{{ __('marketplace.orders_empty_cta') }}</a>
                                         @endunless
                                     </td>
                                 </tr>

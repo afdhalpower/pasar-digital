@@ -159,14 +159,14 @@ class BuyerDashboardController extends Controller
         })->where('product_id', $product->id)->exists();
 
         if (!$hasPurchased) {
-            abort(403, 'Anda belum membeli produk ini atau pembayaran Anda belum diverifikasi.');
+            abort(403, __('marketplace.buyer_not_purchased'));
         }
 
         // Serve actual file from Media Library, with fallback to legacy file_path
         $filePath = $product->getFileDownloadPath();
 
         if (!$filePath || !file_exists($filePath)) {
-            abort(404, 'File produk tidak ditemukan.');
+            abort(404, __('marketplace.buyer_file_not_found'));
         }
 
         $media = $product->getFirstMedia('file');
@@ -199,7 +199,7 @@ class BuyerDashboardController extends Controller
         if ($request->filled('new_password')) {
             if (!Hash::check($request->current_password, $user->password)) {
                 return back()->withErrors([
-                    'current_password' => 'Password saat ini salah.',
+                    'current_password' => __('marketplace.buyer_wrong_password'),
                 ]);
             }
             $user->password = Hash::make($request->new_password);
@@ -207,7 +207,7 @@ class BuyerDashboardController extends Controller
 
         $user->save();
 
-        return back()->with('success', 'Profil Anda berhasil diperbarui.');
+        return back()->with('success', __('marketplace.buyer_profile_updated'));
     }
 
     public function wishlist()
@@ -242,7 +242,7 @@ class BuyerDashboardController extends Controller
         }
 
         if (!in_array($order->status, ['pending', 'processing'])) {
-            return back()->with('error', 'Pesanan tidak dapat dibatalkan.');
+            return back()->with('error', __('marketplace.buyer_order_cannot_cancel'));
         }
 
         $oldStatus = $order->status;
@@ -253,7 +253,7 @@ class BuyerDashboardController extends Controller
 
         $order->user->notify(new OrderStatusChanged($order, $oldStatus, 'cancelled'));
 
-        return redirect()->route('buyer.orders')->with('success', 'Pesanan berhasil dibatalkan.');
+        return redirect()->route('buyer.orders')->with('success', __('marketplace.buyer_order_cancelled'));
     }
 
     public function storeReview(Request $request, Product $product)
@@ -269,7 +269,7 @@ class BuyerDashboardController extends Controller
         })->where('product_id', $product->id)->exists();
 
         if (!$hasPurchased) {
-            return back()->withErrors(['review' => 'Anda harus membeli produk ini terlebih dahulu untuk memberikan ulasan.']);
+            return back()->withErrors(['review' => __('marketplace.buyer_review_must_purchase')]);
         }
 
         $request->validate([
@@ -301,6 +301,6 @@ class BuyerDashboardController extends Controller
         $product->review_count = $product->reviews->count();
         $product->save();
 
-        return back()->with('success', 'Ulasan berhasil disimpan.');
+        return back()->with('success', __('marketplace.buyer_review_saved'));
     }
 }

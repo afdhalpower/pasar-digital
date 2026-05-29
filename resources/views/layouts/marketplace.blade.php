@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', 'PublikDigital - Marketplace produk digital premium untuk kreator Indonesia')">
+    <meta name="description" content="@yield('meta_description', __('marketplace.meta_description'))">
     <meta name="keywords" content="produk digital, template, software, UI kit, marketpace Indonesia, download template, aset digital">
     <link rel="canonical" href="{{ url()->current() }}">
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
+        "@@context": "https://schema.org",
         "@type": "Organization",
         "name": "PublikDigital",
         "url": "{{ url('/') }}",
         "description": "Marketplace produk digital premium untuk kreator Indonesia."
     }
     </script>
-    <meta property="og:title" content="@yield('title', 'PublikDigital') — Marketplace Digital Premium">
-    <meta property="og:description" content="@yield('meta_description', 'PublikDigital - Marketplace produk digital premium untuk kreator Indonesia')">
+    <meta property="og:title" content="@yield('title', __('marketplace.brand')) — {{ __('marketplace.title_suffix') }}">
+    <meta property="og:description" content="@yield('meta_description', __('marketplace.og_description'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="PublikDigital">
+    <meta property="og:site_name" content="{{ __('marketplace.brand') }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('title', 'PublikDigital') — Marketplace Digital Premium">
-    <meta name="twitter:description" content="@yield('meta_description', 'PublikDigital - Marketplace produk digital premium untuk kreator Indonesia')">
-    <title>@yield('title', 'PublikDigital') — Marketplace Digital Premium</title>
+    <meta name="twitter:title" content="@yield('title', __('marketplace.brand')) — {{ __('marketplace.title_suffix') }}">
+    <meta name="twitter:description" content="@yield('meta_description', __('marketplace.og_description'))">
+    <title>@yield('title', __('marketplace.brand')) — {{ __('marketplace.title_suffix') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -39,8 +39,8 @@
     {{-- Glass Navigation Bar --}}
     <nav class="nav-glass" id="mainNav" x-data="{ mobileOpen: false }">
         <div class="container nav-inner">
-            <a href="{{ route('home') }}" class="nav-brand">PublikDigital</a>
-            <button class="nav-toggle" @click="mobileOpen = !mobileOpen" aria-label="Toggle menu">
+            <a href="{{ route('home') }}" class="nav-brand">{{ __('marketplace.brand') }}</a>
+            <button class="nav-toggle" @click="mobileOpen = !mobileOpen" aria-label="{{ __('marketplace.nav_toggle') }}">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <template x-if="!mobileOpen">
                         <path d="M3 12h18M3 6h18M3 18h18"/>
@@ -51,30 +51,30 @@
                 </svg>
             </button>
             <ul class="nav-links" :class="{ 'is-open': mobileOpen }" @click.away="mobileOpen = false">
-                <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a></li>
-                <li><a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'active' : '' }}">Katalog</a></li>
-                <li><a href="{{ route('catalog.bundles') }}" class="bundle-nav-link {{ request()->routeIs('catalog.bundles') ? 'active' : '' }}">Bundel</a></li>
+                <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">{{ __('marketplace.nav_home') }}</a></li>
+                <li><a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'active' : '' }}">{{ __('marketplace.nav_catalog') }}</a></li>
+                <li><a href="{{ route('catalog.bundles') }}" class="bundle-nav-link {{ request()->routeIs('catalog.bundles') ? 'active' : '' }}">{{ __('marketplace.nav_bundles') }}</a></li>
                 <li class="nav-search-item">
                     <form action="{{ route('catalog.index') }}" method="GET" style="display:flex;">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="input-field" style="padding:6px 12px; font-size:0.8rem; min-width:200px;" aria-label="Cari produk">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('marketplace.nav_search') }}" class="input-field" style="padding:6px 12px; font-size:0.8rem; min-width:200px;" aria-label="{{ __('marketplace.nav_search') }}">
                     </form>
                 </li>
                 @auth
-                    <li class="nav-mobile-only"><a href="{{ route('chat.index') }}">Pesan</a></li>
-                    <li class="nav-mobile-only"><a href="{{ route('cart.index') }}">Keranjang</a></li>
+                    <li class="nav-mobile-only"><a href="{{ route('chat.index') }}">{{ __('marketplace.nav_messages') }}</a></li>
+                    <li class="nav-mobile-only"><a href="{{ route('cart.index') }}">{{ __('marketplace.nav_cart') }}</a></li>
                     @if(auth()->user()->isAdmin())
-                        <li class="nav-mobile-only"><a href="{{ url('/admin') }}">Admin Dashboard</a></li>
+                        <li class="nav-mobile-only"><a href="{{ url('/admin') }}">{{ __('marketplace.nav_admin') }}</a></li>
                     @else
-                        <li class="nav-mobile-only"><a href="{{ route('buyer.dashboard') }}">Dashboard Saya</a></li>
-                        <li class="nav-mobile-only"><a href="{{ route('buyer.orders') }}">Pesanan Saya</a></li>
+                        <li class="nav-mobile-only"><a href="{{ route('buyer.dashboard') }}">{{ __('marketplace.nav_dashboard') }}</a></li>
+                        <li class="nav-mobile-only"><a href="{{ route('buyer.orders') }}">{{ __('marketplace.nav_orders') }}</a></li>
                     @endif
                     <li class="nav-mobile-only">
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('marketplace.nav_logout') }}</a>
                         <form id="logout-form" action="{{ route('buyer.logout') }}" method="POST" style="display:none;">@csrf</form>
                     </li>
                 @else
-                    <li class="nav-mobile-only"><a href="{{ route('login') }}">Masuk</a></li>
-                    <li class="nav-mobile-only"><a href="{{ route('register') }}">Daftar</a></li>
+                    <li class="nav-mobile-only"><a href="{{ route('login') }}">{{ __('marketplace.nav_login') }}</a></li>
+                    <li class="nav-mobile-only"><a href="{{ route('register') }}">{{ __('marketplace.nav_register') }}</a></li>
                 @endauth
             </ul>
             <div class="nav-actions">
@@ -92,12 +92,12 @@
                         @endif
                     </a>
                     @if(auth()->user()->isAdmin())
-                        <a href="{{ url('/admin') }}" class="btn btn-secondary" style="padding:8px 20px;">Dashboard</a>
+                        <a href="{{ url('/admin') }}" class="btn btn-secondary" style="padding:8px 20px;">{{ __('marketplace.nav_admin') }}</a>
                     @else
-                        <a href="{{ route('buyer.dashboard') }}" class="btn btn-secondary" style="padding:8px 20px;">Pesanan Saya</a>
+                        <a href="{{ route('buyer.dashboard') }}" class="btn btn-secondary" style="padding:8px 20px;">{{ __('marketplace.nav_orders') }}</a>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-primary" style="padding:8px 20px;">Masuk</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary" style="padding:8px 20px;">{{ __('marketplace.nav_login') }}</a>
                 @endauth
             </div>
         </div>
@@ -112,34 +112,34 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-brand">PublikDigital</div>
+                    <div class="footer-brand">{{ __('marketplace.brand') }}</div>
                     <p style="color: var(--color-on-surface-variant); font-size: 0.875rem; max-width: 320px;">
-                        Marketplace produk digital premium untuk kreator Indonesia. Temukan template, software, dan aset digital berkualitas tinggi.
+                        {{ __('marketplace.footer_description') }}
                     </p>
                 </div>
                 <div>
-                    <h4>Produk</h4>
-                    <a href="{{ route('catalog.index', ['type' => 'template']) }}">Template</a>
-                    <a href="{{ route('catalog.index', ['type' => 'software']) }}">Software</a>
-                    <a href="{{ route('catalog.index', ['type' => 'digital']) }}">Digital</a>
-                    <a href="{{ route('catalog.index', ['type' => 'asset']) }}">Asset</a>
+                    <h4>{{ __('marketplace.footer_products') }}</h4>
+                    <a href="{{ route('catalog.index', ['type' => 'template']) }}">{{ __('marketplace.footer_template') }}</a>
+                    <a href="{{ route('catalog.index', ['type' => 'software']) }}">{{ __('marketplace.footer_software') }}</a>
+                    <a href="{{ route('catalog.index', ['type' => 'digital']) }}">{{ __('marketplace.footer_digital') }}</a>
+                    <a href="{{ route('catalog.index', ['type' => 'asset']) }}">{{ __('marketplace.footer_asset') }}</a>
                 </div>
                 <div>
-                    <h4>Perusahaan</h4>
-                    <a href="{{ route('about') }}">Tentang Kami</a>
-                    <a href="{{ route('careers') }}">Karir</a>
-                    <a href="{{ route('blog') }}">Blog</a>
+                    <h4>{{ __('marketplace.footer_company') }}</h4>
+                    <a href="{{ route('about') }}">{{ __('marketplace.footer_about') }}</a>
+                    <a href="{{ route('careers') }}">{{ __('marketplace.footer_careers') }}</a>
+                    <a href="{{ route('blog') }}">{{ __('marketplace.footer_blog') }}</a>
                 </div>
                 <div>
-                    <h4>Bantuan</h4>
-                    <a href="{{ route('faq') }}">FAQ</a>
-                    <a href="{{ route('contact') }}">Kontak</a>
-                    <a href="{{ route('privacy') }}">Kebijakan Privasi</a>
-                    <a href="{{ route('terms') }}">Syarat & Ketentuan</a>
+                    <h4>{{ __('marketplace.footer_help') }}</h4>
+                    <a href="{{ route('faq') }}">{{ __('marketplace.footer_faq') }}</a>
+                    <a href="{{ route('contact') }}">{{ __('marketplace.footer_contact') }}</a>
+                    <a href="{{ route('privacy') }}">{{ __('marketplace.footer_privacy') }}</a>
+                    <a href="{{ route('terms') }}">{{ __('marketplace.footer_terms') }}</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; {{ date('Y') }} PublikDigital. Semua hak dilindungi.
+                &copy; {{ date('Y') }} {{ __('marketplace.brand') }}. {{ __('marketplace.footer_copyright') }}
             </div>
         </div>
     </footer>
